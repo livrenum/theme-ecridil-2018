@@ -12,7 +12,6 @@
 // -----------------------------------------------------------------------------
 $color-primary: #3273dc !default;
 $dark: #363636 !default;
-$light: $paper-tint;
 
 $navbar-height: 3rem !default;
 $quire-entry-header-height: 6rem !default;
@@ -190,5 +189,26 @@ $quire-page-link-color: $color-primary !default;
 
   .quire-page__content {
     padding-top: 1.5rem;
+  }
+}
+
+.scroll__wrapper {
+  position: relative;
+}
+
+.annotation__reftext {
+  background-color:yellow;
+}
+
+.annotation {
+  height: 300px;
+  width: 100%;
+  background: $dark;
+  display: none;
+  
+  &.is-active {
+    display: block;
+    position: sticky;
+    top: 2em;
   }
 }

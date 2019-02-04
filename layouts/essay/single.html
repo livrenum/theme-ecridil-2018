@@ -13,9 +13,9 @@
   {{ end }}
 
   <section id="content" class="section quire-page__content">
-    <div class="columns">
-      <div class="column">
-        <div class="container">
+    <div class="container is-fluid">
+      <div class="columns scroll__wrapper">
+        <div class="column scroll__col_text">
           <div class="content">
             {{/* Main content goes in the left-hand column */}}
 
@@ -23,10 +23,11 @@
             {{ partial "page-bibliography.html" . }}
           </div>
         </div>
-      </div>
-      
-      <div class="column">
-        {{/* Annotations */}}
+
+        <div class="column scroll__col_annotation">
+          {{/* Annotations */}}
+          <div class="annotation"></div>
+        </div>
       </div>
     </div>
   </section>

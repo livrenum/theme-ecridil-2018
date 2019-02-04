@@ -1,0 +1,10 @@
+<span class="annotation__reftext"
+      {{ with .Get "type" }}
+      data-type="{{ . }}"
+      {{ end }}
+      {{ with .Get "id" }}
+      data-id="ln-annot-{{ . }}"
+      {{ end }}
+      >
+  {{ .Inner | markdownify }}
+</span>

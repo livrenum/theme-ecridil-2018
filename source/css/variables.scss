@@ -33,11 +33,11 @@ $quire-page-paragraph-style: indent;
 // Change the color variables once at the top, or change elements individually
 // below. Colors are typically Hex values, or one of 140 standard color names/
 
-$color-primary: #3273dc;
-$dark: #363636;
-$light: #f5f5f5;
-$paper-tint: #fafaef;
-$paper-accent: #e3d1c2;
+$color-primary: #7d9792;
+$dark: #221411;
+$paper-tint: #f9f8ec;
+$paper-accent: #ae7d65;
+$light: darken($paper-tint, 10%);
 $white: #ffffff;
 
 $quire-page-link-color: $color-primary;
@@ -49,16 +49,16 @@ $page-text-color: $dark;
 $quire-page-header-color: $paper-tint;
 $quire-page-header-text-color: $dark;
 
-$quire-navbar-color: $white;
+$quire-navbar-color: $paper-tint;
 $quire-navbar-border-color: $dark;
 $quire-navbar-text-color: $dark;
 
 $quire-menu-color: $dark;
 $quire-menu-border-color: $dark;
-$quire-menu-text-color: $white;
+$quire-menu-text-color: $paper-tint;
 
 $quire-entry-image-color: $dark;
-$quire-entry-image-icons-color: $white;
+$quire-entry-image-icons-color: $paper-tint;
 
 $quire-splash-page-color: $color-primary;
 
