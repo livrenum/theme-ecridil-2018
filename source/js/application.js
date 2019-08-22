@@ -24,7 +24,7 @@ import Map from './map.js'
 import DeepZoom from './deepzoom.js'
 import Navigation from './navigation.js'
 
-import Annotations from './annotations.js'
+import Augmentations from './augmentations.js'
 
 /**
  * toggleMenu
