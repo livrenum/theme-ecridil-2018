@@ -1,0 +1,21 @@
+<div class="hybrilivre-augmentation__augmentation right-col" data-augmentation-id="{{ .id }}">
+  
+  <figure class="quire-figure">
+    <img class="quire-figure__image hybrilivre-augmentation__image"
+         id="{{ .id }}-image"
+         src="{{ .src }}"
+         alt="">
+
+    <figcaption class="quire-figure__caption augmentation__caption">
+      {{ if .title }}
+      <h3>
+        .title
+      </h3>
+      {{ end }}
+
+      {{ if .caption}}
+      {{ .caption }}
+      {{ end }}
+    </figcaption>
+  </figure>
+</div>

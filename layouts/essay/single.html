@@ -8,29 +8,21 @@
 <article class="{{ partial "page-class.html" . }} quire-essay" id="main" role="main">
   {{ partial "page-header.html" . }}
 
-  {{ if .Params.abstract }}
-  {{ partial "page-abstract.html" . }}
-  {{ end }}
-
   <section id="content" class="section quire-page__content">
-    <div class="container is-fluid">
-      <div class="columns scroll__wrapper">
-        <div class="column scroll__col_text">
-          <div class="content">
-            {{/* Main content goes in the left-hand column */}}
-
-            {{ .Content }}
-            {{ partial "page-bibliography.html" . }}
-          </div>
-        </div>
-
-        <div class="column scroll__col_annotation">
-          {{/* Augmentations */}}
-          <div class="annotation"></div>
-        </div>
+    <div class="container is-fluid content hybrilivre-augmentation-scroll-wrapper">
+    {{ if .Params.abstract }}
+    {{ partial "page-abstract.html" . }}
+    {{ end }}
+        
+        {{ range .Params.augmentations }}
+        {{ partial "hl-augmentation.html" . }}
+        {{ end }}
+        
+        {{ .Content }}
+        {{ partial "page-bibliography.html" . }}
+      
+        {{ partial "footer-buttons.html" . }}
       </div>
-    </div>
   </section>
-
 </article>
 {{ end }}

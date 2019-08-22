@@ -1,10 +1,9 @@
-<span class="annotation__reftext"
-      {{ with .Get "type" }}
-      data-type="{{ . }}"
+<span class="hybrilivre-augmentation__step-marker"
+      {{ with .Get "before" }}
+      data-augmentation-before="{{ . }}"
       {{ end }}
-      {{ with .Get "id" }}
-      data-id="ln-annot-{{ . }}"
+      {{ with .Get "after" }}
+      data-augmentation-after="ln-annot-{{ . }}"
       {{ end }}
       >
-  {{ .Inner | markdownify }}
 </span>
