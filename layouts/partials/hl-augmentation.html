@@ -9,12 +9,12 @@
     <figcaption class="quire-figure__caption augmentation__caption">
       {{ if .title }}
       <h3>
-        .title
+        {{ .title | markdownify}}
       </h3>
       {{ end }}
 
       {{ if .caption}}
-      {{ .caption }}
+      {{ .caption | markdownify}}
       {{ end }}
     </figcaption>
   </figure>
