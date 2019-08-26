@@ -14,7 +14,7 @@
 // Other fonts may be used, but will probaby require additional custom styling.
 
 $serif: Merriweather, Georgia, serif;
-$sans-serif: Lato, Helvetica, sans-serif;
+$sans-serif: Titillium, Helvetica, sans-serif;
 $slab-serif: Aleo, Rockwell, "Trebuchet MS", sans-serif;
 
 $family-primary: $sans-serif;
@@ -23,7 +23,7 @@ $family-primary: $sans-serif;
 $family-secondary: $sans-serif;
 // headings and navigation items: $serif, $sans-serif, $slab-serif
 
-$quire-base-font-size: 17px;
+$quire-base-font-size: 14px;
 $quire-page-paragraph-style: indent;
 // make the value null for paragraphs with no indent and a line space between
 
@@ -101,4 +101,15 @@ $quire-entry-header-height: 6rem;
 $quire-map-height: 500px;
 $quire-deepzoom-height: 500px;
 // default heights for maps and zooming image figures
+
+$hybrilivre-col-breakpoint: 680px;
+
+
+// Animations
+// -----------------------------------------------------------------------------
+
+$transition-default-duration: .55s;
+// Easings
+$ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
 

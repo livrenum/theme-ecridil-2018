@@ -10,18 +10,19 @@
 
   <section id="content" class="section quire-page__content">
     <div class="container is-fluid content hybrilivre-augmentation__scroll-wrapper">
-    {{ if .Params.abstract }}
-    {{ partial "page-abstract.html" . }}
-    {{ end }}
+      {{ if .Params.abstract }}
+      {{ partial "page-abstract.html" . }}
+      {{ end }}
         
-        {{ range .Params.augmentations }}
-        {{ partial "hl-augmentation.html" . }}
-        {{ end }}
-        
-        {{ .Content }}
-        {{ partial "page-bibliography.html" . }}
+      {{ range .Params.augmentations }}
+      {{ partial "hl-augmentation.html" . }}
+      {{ end }}
       
-        {{ partial "footer-buttons.html" . }}
+      <div class="hybrilivre-augmentation__separator"></div>
+        
+      {{ .Content }}
+      {{ partial "page-bibliography.html" . }}
+      
       </div>
   </section>
 </article>

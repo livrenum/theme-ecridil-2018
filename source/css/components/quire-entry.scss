@@ -227,8 +227,29 @@ $quire-page-link-color: $color-primary !default;
 }
 
 .quire-page__content .content > :not(.right-column) {
+  @media (min-width: $hybrilivre-col-breakpoint) {
     max-width: 50%;
+    max-width: calc(50% - 1.5em);
+  }
 }
+.quire-page__content .content > blockquote:not(.right-column) {
+  @media (min-width: $hybrilivre-col-breakpoint) {
+    max-width: calc(50% - 3em);
+  }
+}
+
+.hybrilivre-augmentation__separator {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  left: 50%;
+  width: 6%;
+  height: 100%;
+  border-left: 1px solid rgba($page-text-color, 0.1);
+  // background gradient, homothetic page
+//  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+}
+
 .hybrilivre-augmentation__augmentation {
     width: 50%;
     float: right;
@@ -241,7 +262,7 @@ $quire-page-link-color: $color-primary !default;
     display: none;
     z-index: 2;
 }
-@media screen and (min-width:640px) {
+@media screen and (min-width: $hybrilivre-col-breakpoint) {
  .hybrilivre-augmentation__augmentation {
   width:50%;
   float:right;
