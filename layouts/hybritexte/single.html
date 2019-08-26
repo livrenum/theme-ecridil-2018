@@ -1,0 +1,50 @@
+{{/*
+  Hybritexte layout. This layout describes a single-page template that has been
+  augmented with the ability to display a frontmatter-defined abstract (in
+  markdown format) as well as bibliography references.
+
+  With multimodal "augmentations", in 2-column layout.
+*/}}
+
+{{ define "main" }}
+<article class="{{ partial "page-class.html" . }} quire-essay hybritexte-article" id="main" role="main">
+  {{/* partial "page-header.html" . */}}
+
+  <section id="content" class="section quire-page__content">
+    <div class="container is-fluid content hybrilivre-augmentation__scroll-wrapper">
+      
+      <header class="hybritexte-article__header">
+        {{/* Page Title */}}
+        <h1 class="hybritexte-article__header__title" id="{{ .Title | urlize }}">
+          {{ with .Params.number }}<span>{{ . }}.</span>{{ end }}
+          {{ .Title | markdownify }}
+          {{ with .Params.subtitle }}
+          <span class="hybritexte-article__header__subtitle">{{ . | markdownify }}</span>
+          {{ end }}
+        </h1>
+
+        {{/* Contributors, if any */}}
+        {{ with .Params.contributor }}
+        <div class="quire-page__header__contributor">
+          {{ partial "contributor-list.html" (dict "range" . "contributorType" "all" "listType" "list-plus" "Site" $.Site) }}
+        </div>
+        {{ end }}
+      </header>
+      
+      {{ if .Params.abstract }}
+      {{ partial "page-abstract.html" . }}
+      {{ end }}
+        
+      {{ range .Params.augmentations }}
+      {{ partial "hl-augmentation.html" . }}
+      {{ end }}
+      
+      <div class="hybrilivre-augmentation__separator"></div>
+        
+      {{ .Content }}
+      {{ partial "page-bibliography.html" . }}
+      
+      </div>
+  </section>
+</article>
+{{ end }}

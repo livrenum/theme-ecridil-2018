@@ -1,5 +1,11 @@
 {{- $js := "js/application.js" | relURL -}}
 <script src="{{ $js }}"></script>
+
+{{- if eq .Page.Type "hybritexte" -}}
+{{- $augmentationsJS := "js/augmentations.js" | relURL -}}
+<script src="{{ $augmentationsJS }}"></script>
+{{- end -}}
+
 <script type="text/javascript">
 // add scripts here
 </script>

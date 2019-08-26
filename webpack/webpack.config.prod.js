@@ -13,11 +13,12 @@ const PATHS = {
 module.exports = {
   mode: 'production',
   entry: {
-    source: path.join(PATHS.source, 'js', 'application.js')
+    source: path.join(PATHS.source, 'js', 'application.js'),
+    augmentations: path.join(PATHS.source, 'js', 'augmentations.js')
   },
   output: {
     path: PATHS.build,
-    filename: path.join('js', 'application.js')
+    filename: path.join('js', '[name].js')
   },
   module: {
     rules: [{

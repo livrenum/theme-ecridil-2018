@@ -30,6 +30,7 @@ $sans-serif: Lato, Helvetica, sans-serif !default;
 $family-secondary: $sans-serif !default;
 $desktop: 700px !default;
 $navbar-height: 3rem !default;
+$navbar-height: 3.5rem;
 
 $quire-navbar-color: $white !default;
 $quire-navbar-border-color: $dark !default;
@@ -102,13 +103,15 @@ $quire-navbar-text-color: $dark !default;
     max-height: $navbar-height;
     overflow: hidden;
     display: none;
+    font-size: 1.25rem;
 
     &.quire-current-page {
-      font-style: italic;
+//      font-style: italic;
     }
 
-    @media screen and (min-width: 500px) {
-      &.quire-home-page {
+    &.quire-home-page {
+      font-weight: bold;
+      @media screen and (min-width: 500px) {
         display: block;
       }
     }

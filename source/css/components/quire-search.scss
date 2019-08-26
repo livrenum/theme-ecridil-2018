@@ -11,6 +11,7 @@ $sans-serif: Lato, Helvetica, sans-serif !default;
 $quire-menu-color: $dark !default;
 $quire-menu-text-color: $white !default;
 $navbar-height: 3rem !default;
+$navbar-height: 3.5rem;
 $family-secondary: $sans-serif !default;
 
 // .quire-search
@@ -19,7 +20,9 @@ $family-secondary: $sans-serif !default;
   background-color: $quire-menu-color;
   display: none;
   height: 100vh;
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
 
@@ -51,7 +54,7 @@ $family-secondary: $sans-serif !default;
 
   &__close-button {
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
 
     button.button {

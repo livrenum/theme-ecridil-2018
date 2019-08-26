@@ -39,7 +39,7 @@ Cover page layout. This controls the home page of the publication.
         {{- if .Site.Data.publication.contributor_as_it_appears -}}
         {{ .Site.Data.publication.contributor_as_it_appears }}
         {{ else }}
-        <span class="visually-hidden">Contributors: </span>
+        <span class="visually-hidden">Contributeurs: </span>
         {{ partial "contributor-list.html" (dict "range" .Site.Data.publication.contributor "contributorType" "primary" "listType" "list" ) }}
         {{- end -}}
         </div>
@@ -61,7 +61,7 @@ Cover page layout. This controls the home page of the publication.
         {{ . }}
       </div>
       <div class="has-text-centered">
-        <a class="button is-medium quire-cover__button" href="/contents">Start reading {{- template "image-control-icon" (dict "type" "right-arrow" "description" "Go to next page" "imageDir" ($.Scratch.Get "imageDir") ) -}}</a>
+        <a class="button is-medium quire-cover__button" href="/contents">Débuter la lecture {{- template "image-control-icon" (dict "type" "right-arrow" "description" "Page suivante" "imageDir" ($.Scratch.Get "imageDir") ) -}}</a>
       </div>
     </div>
   </section>

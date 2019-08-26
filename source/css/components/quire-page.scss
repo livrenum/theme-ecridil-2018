@@ -25,6 +25,7 @@ $light: $paper-tint;
 $family-primary: $serif !default;
 $family-secondary: $sans-serif !default;
 $navbar-height: 3rem !default;
+$navbar-height: 3.5rem;
 
 $quire-base-font-size: 17px !default;
 $quire-page-paragraph-style: indent !default;
@@ -343,5 +344,20 @@ html {
       column-count: 1;
       margin: 0 .75in;
     }
+  }
+}
+
+.hybritexte-page__header {
+  
+  
+  &__title {
+    font-style: normal;
+    font-weight: 500;
+    display: block;
+  }
+  &__subtitle {
+    display: block;
+    font-size: 1.5em;
+    font-weight: 400;
   }
 }

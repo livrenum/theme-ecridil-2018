@@ -14,6 +14,7 @@ $color-primary: #3273dc !default;
 $dark: #363636 !default;
 
 $navbar-height: 3rem !default;
+$navbar-height: 3.5rem;
 $quire-entry-header-height: 6rem !default;
 
 $quire-entry-image-color: $dark !default;
@@ -192,10 +193,8 @@ $quire-page-link-color: $color-primary !default;
   }
 }
 
-.scroll__wrapper {
-  position: relative;
-}
-
+// Augmentations
+// -----------------------------------------------------------------------------
 
 .scroll__wrapper {
   position: relative; }
@@ -239,15 +238,20 @@ $quire-page-link-color: $color-primary !default;
 }
 
 .hybrilivre-augmentation__separator {
-  position: absolute;
-  top: 0;
-  z-index: 0;
-  left: 50%;
-  width: 6%;
-  height: 100%;
-  border-left: 1px solid rgba($page-text-color, 0.1);
-  // background gradient, homothetic page
-//  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+  // do not show column separator under the breakpoint
+  display: none;
+  @media (min-width: $hybrilivre-col-breakpoint) {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    left: 50%;
+    width: 6%;
+    height: 100%;
+    border-left: 1px solid rgba($page-text-color, 0.1);
+    // background gradient, homothetic page
+  //  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+  }
 }
 
 .hybrilivre-augmentation__augmentation {

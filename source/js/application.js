@@ -24,8 +24,6 @@ import Map from './map.js'
 import DeepZoom from './deepzoom.js'
 import Navigation from './navigation.js'
 
-import Augmentations from './augmentations.js'
-
 /**
  * toggleMenu
  * @description Show/hide the menu UI by changing CSS classes and Aria status.

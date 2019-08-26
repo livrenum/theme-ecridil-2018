@@ -57,6 +57,7 @@ $navbar-height: 3rem !default;
     .quire__primary { flex: 1; }
 
     .quire__secondary {
+      position: static;
       order: 2;
       width: 100%;
     }
@@ -68,8 +69,8 @@ $navbar-height: 3rem !default;
       display: flex;
       flex-direction: column;
       height: 100vh;
-      left: 0;
-      position: absolute;
+//      left: 0;
+//      position: absolute;
       transition: all $transition-default-duration $ease-out-quart 0s;
       width: 100%;
 
@@ -100,8 +101,10 @@ $navbar-height: 3rem !default;
       transform: translateX($quire-menu-width);
       z-index: 1100;
 
-      @media screen and (max-width: $quire-menu-width) {
+      @media screen and (max-width: $quire-menu-width + 50px) {
         width: calc(100vw - #{$navbar-height});
+        // Preserve 15% on really small screens
+        max-width: 85%;
       }
 
       // Keyboard navigation fix; users should only be able to tab through the
@@ -124,6 +127,9 @@ $navbar-height: 3rem !default;
 //          left: $quire-menu-width;
 //          width: calc(100% - #{$quire-menu-width});
           @media screen and (max-width: $quire-menu-width) {
+            // Preserve 15% on really small screens
+            transform: translateX(-85%);
+            
 //            left: calc(100vw - #{$navbar-height});
 //            width: #{$navbar-height};
           }
