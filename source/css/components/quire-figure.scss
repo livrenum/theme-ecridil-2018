@@ -33,7 +33,7 @@ $tablet: 500px !default;
       margin-right: 2em;
     }
   }
-  .content .hybrilivre-augmentation__augmentation & {
+  .content .hybritexte-augmentation__augmentation & {
     margin-left: 0;
     margin-right: 0;
   }
@@ -215,4 +215,10 @@ $tablet: 500px !default;
     break-inside: avoid;
   }
 
+}
+
+.hybritexte-augmentation {
+  &__image {
+    max-height: 80vh;
+  }
 }

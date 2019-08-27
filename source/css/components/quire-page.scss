@@ -252,6 +252,9 @@ body {
 
     a:not([rel=footnote]):not(.footnote-return) {
       color: $quire-page-link-color;
+      &.button {
+        color: #ffffff;
+      }
       border-bottom: 1px solid $quire-page-link-color;
       @media print {
         color: $page-text-color;

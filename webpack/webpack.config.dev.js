@@ -16,13 +16,12 @@ module.exports = {
     poll: 1000
   },
   entry: {
-    source: path.join(PATHS.source, 'js', 'application.js'),
-    augmentations: path.join(PATHS.source, 'js', 'augmentations.js')
+    source: path.join(PATHS.source, 'js', 'application.js')
   },
   output: {
     path: PATHS.build,
     publicPath: "/",
-    filename: path.join('js', '[name].js')
+    filename: path.join('js', 'application.js')
   },
   module: {
     rules: [{

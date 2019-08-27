@@ -41,7 +41,7 @@ $light: darken($paper-tint, 10%);
 $white: #ffffff;
 
 $quire-page-link-color: $color-primary;
-$quire-page-link-highlight: $light;
+$quire-page-link-highlight: lighten($color-primary, 10%);
 
 $page-color: $paper-tint;
 $page-text-color: $dark;

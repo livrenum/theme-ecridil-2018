@@ -1,58 +1,70 @@
 import 'intersection-observer'
 import scrollama from 'scrollama'
 
-const scrollWrapperSelector = '.hybritexte-page__scroll-wrapper'
-const augmentationSelector = '.hybritexte-augmentation__augmentation'
-const stepSelector = ".hybritexte-augmentation__step-marker"
-const scroller = setupAugmentations()
+class Augmentations {
 
-resize()
+  constructor() {
+    this.setupAugmentations()
+  }
 
-window.addEventListener("resize", resize)
+  setupAugmentations() {
+    
+    if (!document.querySelector('.hybritexte-page__scroll-wrapper')) {
+      return;
+    }
 
-function setupAugmentations() {
-  return scrollama()
-    .setup({
-      container: scrollWrapperSelector,
-      step: stepSelector,
-      offset: 0.66,
-      progress: true,
+    this.scroller = new scrollama()
+      .setup({
+        container: '.hybritexte-page__scroll-wrapper',
+        step: '.hybritexte-augmentation__step-marker',
+        offset: 0.66,
+        progress: true,
+      })
+    
+    this.resize()
+
+    window.addEventListener('resize', this.resize)
+    
+    this.scroller.onStepEnter(this.handleStepEnter)
+  }
+
+  /**
+   * Handle step trigger
+   * @param {object} t trigger object
+   */
+  handleStepEnter(t) {
+    console.log('handle step enter', t)
+    
+    // reset augmentations
+    let a = Array.prototype.slice.call(document.querySelectorAll('.hybritexte-augmentation__augmentation'))
+
+    console.log('reset all augm', a)
+
+    a.forEach(function(b) {
+      b.classList.remove('is-active')
     })
-    .onStepEnter(handleStepEnter)
-}
+    // reset augmentations END
 
-/**
- * Handle step trigger
- * @param {object} t trigger object
- */
-function handleStepEnter(t) {
-  console.log("handle step enter", t);
-  resetAugmentations()
+    var e = t.element.getAttribute('data-augmentation-before'),
+        n = t.element.getAttribute('data-augmentation-after');
 
-  var e = t.element.getAttribute("data-augmentation-before"),
-      n = t.element.getAttribute("data-augmentation-after");
+    if ('up' === t.direction && e) {
+      document.querySelector('[data-augmentation-id="' + e + '"]').classList.add('is-active')
+    } else if ('down' === t.direction && n) {
+      document.querySelector('[data-augmentation-id="' + n + '"]').classList.add('is-active')
+    }
+  }
+
+  resize() {
+    this.scroller.resize()
+  }
   
-  if ("up" === t.direction && e) {
-    document.querySelector('[data-augmentation-id="' + e + '"]').classList.add("is-active")
-  } else if ("down" === t.direction && n) {
-    document.querySelector('[data-augmentation-id="' + n + '"]').classList.add("is-active")
+  destroy() {
+    window.removeEventListener('resize', this.resize)
+    if (this.scroller) {
+      this.scroller.destroy()
+    }
   }
 }
 
-function handleStepExit() {
-  console.log('exit')
-//  annotElem.classList.remove('is-active')
-}
-function resetAugmentations() {
-  var t = Array.prototype.slice.call(document.querySelectorAll(augmentationSelector))
-  
-  console.log("reset all augm", t)
-  
-  t.forEach(function(t) {
-    t.classList.remove("is-active")
-  })
-}
-
-function resize() {
-  scroller.resize()
-}
+export default Augmentations

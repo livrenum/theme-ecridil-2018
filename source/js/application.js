@@ -23,6 +23,7 @@ import Search from './search.js'
 import Map from './map.js'
 import DeepZoom from './deepzoom.js'
 import Navigation from './navigation.js'
+import Augmentations from './augmentations.js'
 
 /**
  * toggleMenu
@@ -219,6 +220,20 @@ function navigationTeardown() {
   navigation = undefined
 }
 
+let augmentations
+function augmentationsSetup() {
+  if (!augmentations) {
+    augmentations = new Augmentations()
+  }
+}
+
+function destroyAugmentations() {
+  if (augmentations) {
+    augmentations.destroy()
+  }
+  augmentations = undefined
+}
+
 /**
  * scrollToHash
  * @description Scroll the #main area after each smoothState reload.
@@ -257,6 +272,7 @@ function pageSetup() {
   deepZoomSetup()
   sliderSetup()
   navigationSetup()
+  augmentationsSetup()
 }
 
 /**
@@ -266,6 +282,7 @@ function pageSetup() {
  */
 function pageTeardown() {
   navigationTeardown()
+  destroyAugmentations()
 }
 
 // Start
