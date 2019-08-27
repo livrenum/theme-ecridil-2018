@@ -68,7 +68,10 @@ $navbar-height: 3rem !default;
     .quire__primary {
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      // Louis : wondering why this 100vh is set
+      // make it min-height for now
+//      height: 100vh;
+      min-height: 100vh;
 //      left: 0;
 //      position: absolute;
       transition: all $transition-default-duration $ease-out-quart 0s;
@@ -137,7 +140,7 @@ $navbar-height: 3rem !default;
         
         .quire__secondary {
           transform: translateX(0);
-          width: calc($quire-menu-width - 2em)
+          width: calc(#{$quire-menu-width} - 2em)
         }
       }
     }

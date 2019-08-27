@@ -9,42 +9,50 @@
 {{ define "main" }}
 <article class="{{ partial "page-class.html" . }} quire-essay hybritexte-article" id="main" role="main">
   {{/* partial "page-header.html" . */}}
+  <header class="hybritexte-page__header">
+    <div class="container is-fluid has-2-columns">
+<!--      <div class="hybritexte-page__separator"></div>-->
 
-  <section id="content" class="section quire-page__content">
-    <div class="container is-fluid content hybrilivre-augmentation__scroll-wrapper">
-      
-      <header class="hybritexte-article__header">
-        {{/* Page Title */}}
-        <h1 class="hybritexte-article__header__title" id="{{ .Title | urlize }}">
-          {{ with .Params.number }}<span>{{ . }}.</span>{{ end }}
-          {{ .Title | markdownify }}
-          {{ with .Params.subtitle }}
-          <span class="hybritexte-article__header__subtitle">{{ . | markdownify }}</span>
-          {{ end }}
-        </h1>
+      {{/* Page Title */}}
+      <h1 class="hybritexte-page__header__title" id="{{ .Title | urlize }}">
+        {{ with .Params.number }}<span class="hybritexte-page__header__number">{{ . }}<span class="visually-hidden">.</span></span></br>{{ end }}
+        {{ .Title | markdownify }}
+      </h1>
 
-        {{/* Contributors, if any */}}
-        {{ with .Params.contributor }}
-        <div class="quire-page__header__contributor">
-          {{ partial "contributor-list.html" (dict "range" . "contributorType" "all" "listType" "list-plus" "Site" $.Site) }}
-        </div>
-        {{ end }}
-      </header>
+      {{/* Contributors, if any */}}
+      {{ with .Params.contributor }}
+      <div class="hybritexte-page__header__contributor">
+        {{ partial "contributor-list.html" (dict "range" . "contributorType" "all" "listType" "list-plus" "Site" $.Site) }}
+      </div>
+      {{ end }}
+
+      {{ with .Params.subtitle }}
+      <div class="hybritexte-page__header__subtitle">
+        {{ . | markdownify }}
+      </div>
+      {{ end }}
       
+      {{/* Right-hand side abstract */}}
       {{ if .Params.abstract }}
-      {{ partial "page-abstract.html" . }}
+      <div class="right-column">
+        {{/* partial "hybritexte-page-abstract.html" . */}}
+      </div>
       {{ end }}
-        
+    </div>
+  </header>
+
+  <section id="content" class="section quire-page__content content ">
+    <div class="container is-fluid has-2-columns hybritexte-page__scroll-wrapper">
+
       {{ range .Params.augmentations }}
-      {{ partial "hl-augmentation.html" . }}
+      {{ partial "hybritexte-augmentation.html" . }}
       {{ end }}
-      
-      <div class="hybrilivre-augmentation__separator"></div>
-        
+
+      <div class="hybritexte-page__separator"></div>
+
       {{ .Content }}
       {{ partial "page-bibliography.html" . }}
-      
-      </div>
+    </div>
   </section>
 </article>
 {{ end }}

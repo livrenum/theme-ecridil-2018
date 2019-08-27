@@ -45,6 +45,14 @@ html {
   }
 }
 
+body {
+  background-color: $light;
+  
+  @media print {
+    background-color: none;
+  }
+}
+
 // .quire-page
 // -----------------------------------------------------------------------------
 .quire-page {
@@ -231,7 +239,6 @@ html {
   line-height: 1.78;
   font-weight: 400;
   padding-bottom: 8rem;
-  background-color: $light;
 
   @if $family-primary != $serif {
     font-size: 1.25rem;
@@ -241,7 +248,7 @@ html {
 
   // Overrides to Bulma's .content styles where needed.
 
-  .content {
+//  &.content {
 
     a:not([rel=footnote]):not(.footnote-return) {
       color: $quire-page-link-color;
@@ -327,7 +334,8 @@ html {
         margin-top: 0;
       }
     }
-  }
+// comment out .content
+//  }
 
   @media print {
     column-count: 2;
@@ -347,17 +355,69 @@ html {
   }
 }
 
-.hybritexte-page__header {
-  
-  
-  &__title {
-    font-style: normal;
-    font-weight: 500;
-    display: block;
+.hybritexte-page {
+  &__header {
+    padding: 3rem 0;
+//    min-height: calc(100vh - #{$navbar-height});
+
+    &__title {
+
+      font-family: $family-secondary;
+      font-size: 4rem;
+      font-style: italic;
+      line-height: 1.14;
+      margin-bottom: 1rem;
+
+      font-style: normal;
+      font-weight: 500;
+      display: block;
+    }
+
+    &__subtitle {
+      display: block;
+      margin-top: 1rem;
+      font-size: 1.35rem;
+      font-weight: 300;
+    }
+
+    &__number {
+      display: inline-block;
+      font-size: 4rem;
+      position: relative;
+      margin-left: 1.25em;
+      z-index: 1;
+      margin-bottom: .25rem;
+
+      &::before {
+        content: '';
+        height: 1.5em;
+        width: 1.5em;
+        background-color: $paper-accent;
+        position: absolute;
+        bottom: -.1rem;
+        left: -1.25em;
+        z-index: -1;
+      }
+    }
+
+    &__contributor {
+      font-family: $family-secondary;
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.143;
+      
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin-left: 0;
+        
+        li {
+        }
+      }
+    }
   }
-  &__subtitle {
-    display: block;
-    font-size: 1.5em;
-    font-weight: 400;
+  
+  &__abstract {
+    
   }
 }

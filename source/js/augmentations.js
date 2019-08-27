@@ -1,9 +1,9 @@
 import 'intersection-observer'
 import scrollama from 'scrollama'
 
-const scrollWrapperSelector = '.hybrilivre-augmentation__scroll-wrapper'
-const augmentationSelector = '.hybrilivre-augmentation__augmentation'
-const stepSelector = ".hybrilivre-augmentation__step-marker"
+const scrollWrapperSelector = '.hybritexte-page__scroll-wrapper'
+const augmentationSelector = '.hybritexte-augmentation__augmentation'
+const stepSelector = ".hybritexte-augmentation__step-marker"
 const scroller = setupAugmentations()
 
 resize()
