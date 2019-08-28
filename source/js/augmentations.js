@@ -4,27 +4,27 @@ import scrollama from 'scrollama'
 class Augmentations {
 
   constructor() {
+    this.boundResize = this.resize.bind(this)
     this.setupAugmentations()
   }
 
   setupAugmentations() {
     
     if (!document.querySelector('.hybritexte-page__scroll-wrapper')) {
-      return;
+      return
     }
+    alert('about to setup scroll')
 
     this.scroller = new scrollama()
       .setup({
         container: '.hybritexte-page__scroll-wrapper',
         step: '.hybritexte-augmentation__step-marker',
         offset: 0,
-        progress: true,
+        progress: true
       })
-    
-//    this.resize()
 
-    window.addEventListener('resize', this.resize)
-    
+    window.addEventListener('resize', this.boundResize)
+
     this.scroller.onStepEnter(this.handleStepEnter)
   }
 
@@ -60,7 +60,7 @@ class Augmentations {
   }
   
   destroy() {
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', this.boundResize)
     if (this.scroller) {
       this.scroller.destroy()
     }

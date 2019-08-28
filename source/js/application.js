@@ -223,7 +223,10 @@ function navigationTeardown() {
 let augmentations
 function augmentationsSetup() {
   if (!augmentations) {
+    alert('augmetnations not setup')
     augmentations = new Augmentations()
+  } else {
+    alert('augmentations already setup', augmentations)
   }
 }
 
@@ -308,15 +311,17 @@ $(document).ready(() => {
       render($container, $newContent) {
         $container.html($newContent)
         $container.velocity('fadeIn', { duration: 200 })
-        pageSetup()
       }
     },
     onAfter: function($container, $newContent) {
       scrollToHash();
+      pageSetup()
 
       if (window.ga) {
         window.ga('send', 'pageview', window.location.pathname);
       }
+      
+      augmentationsSetup()
     },
     onBefore($container, $newContent) {
       pageTeardown();
