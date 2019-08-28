@@ -13,7 +13,6 @@ class Augmentations {
     if (!document.querySelector('.hybritexte-page__scroll-wrapper')) {
       return
     }
-    alert('about to setup scroll')
 
     this.scroller = new scrollama()
       .setup({

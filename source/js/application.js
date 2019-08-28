@@ -223,10 +223,8 @@ function navigationTeardown() {
 let augmentations
 function augmentationsSetup() {
   if (!augmentations) {
-    alert('augmetnations not setup')
     augmentations = new Augmentations()
   } else {
-    alert('augmentations already setup', augmentations)
   }
 }
 
