@@ -17,11 +17,11 @@ class Augmentations {
       .setup({
         container: '.hybritexte-page__scroll-wrapper',
         step: '.hybritexte-augmentation__step-marker',
-        offset: 0.66,
+        offset: 0,
         progress: true,
       })
     
-    this.resize()
+//    this.resize()
 
     window.addEventListener('resize', this.resize)
     
@@ -32,31 +32,31 @@ class Augmentations {
    * Handle step trigger
    * @param {object} t trigger object
    */
-  handleStepEnter(t) {
-    console.log('handle step enter', t)
+  handleStepEnter(response) {
+    console.log('handle step enter', response)
     
     // reset augmentations
     let a = Array.prototype.slice.call(document.querySelectorAll('.hybritexte-augmentation__augmentation'))
-
-    console.log('reset all augm', a)
 
     a.forEach(function(b) {
       b.classList.remove('is-active')
     })
     // reset augmentations END
 
-    var e = t.element.getAttribute('data-augmentation-before'),
-        n = t.element.getAttribute('data-augmentation-after');
+    let beforeId = response.element.getAttribute('data-augmentation-before')
+    let afterId = response.element.getAttribute('data-augmentation-after')
 
-    if ('up' === t.direction && e) {
-      document.querySelector('[data-augmentation-id="' + e + '"]').classList.add('is-active')
-    } else if ('down' === t.direction && n) {
-      document.querySelector('[data-augmentation-id="' + n + '"]').classList.add('is-active')
+    if ('up' === response.direction && beforeId) {
+      document.querySelector('[data-augmentation-id="' + beforeId + '"]').classList.add('is-active')
+    } else if ('down' === response.direction && afterId) {
+      document.querySelector('[data-augmentation-id="' + afterId + '"]').classList.add('is-active')
     }
   }
 
   resize() {
-    this.scroller.resize()
+    if (this.scroller) {
+      this.scroller.resize()
+    }
   }
   
   destroy() {
