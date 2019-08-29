@@ -148,6 +148,7 @@ $quire-navbar-text-color: $dark !default;
   width: $navbar-height;
   padding: 0;
   transition: all 0.15s linear;
+  cursor: pointer;
 
   &:hover {
     background-color: darken($quire-navbar-color, 5%);

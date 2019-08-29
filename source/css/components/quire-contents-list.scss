@@ -68,7 +68,8 @@ $quire-page-paragraph-style: indent !default;
       }
       @if $quire-page-paragraph-style == "indent" {
         p { margin-bottom: 0; }
-        p + p { text-indent: 2em; }
+        p + p,
+        .hybritexte-augmentation__augmentation + p { text-indent: 2em; }
       }
     }
   }

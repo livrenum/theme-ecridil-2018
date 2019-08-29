@@ -25,6 +25,7 @@ class Augmentations {
     window.addEventListener('resize', this.boundResize)
 
     this.scroller.onStepEnter(this.handleStepEnter)
+    this.scroller.onStepExit(this.handleStepEnter)
     this.enableAugmentations()
   }
   
@@ -46,7 +47,7 @@ class Augmentations {
     let augmentations = Array.prototype.slice.call(document.querySelectorAll('.hybritexte-augmentation__augmentation'))
 
     augmentations.forEach(function(b) {
-      b.classList.remove('is-active', 'is-stuck')
+//      b.classList.remove('is-active', 'is-stuck')
     })
     // END reset augmentations
 
@@ -55,7 +56,7 @@ class Augmentations {
 
     if ('up' === response.direction && afterId) {
       let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
-      matchingElem && matchingElem.classList.add('is-active')
+      matchingElem && matchingElem.classList.remove('is-active', 'is-stuck')
     } else if ('down' === response.direction && afterId) {
       let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
       matchingElem && matchingElem.classList.add('is-active', 'is-stuck')

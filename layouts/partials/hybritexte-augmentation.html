@@ -13,7 +13,7 @@
   Properties:
   - id
   - type {string} image|texte|commentaire|audio|video|iframe
-  - title {string}
+  - title {string} markdown-formatted string
   - author {string}
   - caption {string}
   - copyright {string}
@@ -21,6 +21,7 @@
   - src {string} nom du fichier média
   - location {string}
   - medium
+  - content {string} markdown-formatted string
 
   Available types:
   - image
@@ -50,7 +51,11 @@
     
     {{/* BEGIN IMAGE TYPE */}}
     {{ if eq .type "texte" }}
-    {{ .caption }}
+    <div class="hybritexte-augmentation__text">
+      {{ if .content }}
+      {{ .content | markdownify }}
+      {{ end }}
+    </div>
     {{ end }}
     {{/* END IMAGE TYPE */}}
 
@@ -65,12 +70,12 @@
       <figcaption class="quire-figure__caption hybritexte-augmentation__caption">
         {{ if .title }}
         <h3>
-          {{ .title | markdownify}}
+          {{ .title | markdownify }}
         </h3>
         {{ end }}
 
         {{ if .caption}}
-        {{ .caption | markdownify}}
+        {{ .caption | markdownify }}
         {{ end }}
       </figcaption>
     </figure>    
