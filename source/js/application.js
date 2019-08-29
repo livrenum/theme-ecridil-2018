@@ -273,7 +273,6 @@ function pageSetup() {
   deepZoomSetup()
   sliderSetup()
   navigationSetup()
-  augmentationsSetup()
 }
 
 /**
@@ -295,6 +294,7 @@ globalSetup()
 // Run when document is ready
 $(document).ready(() => {
   pageSetup()
+  augmentationsSetup()
 
   $('#container').smoothState({
     scroll: false,
@@ -309,16 +309,17 @@ $(document).ready(() => {
       render($container, $newContent) {
         $container.html($newContent)
         $container.velocity('fadeIn', { duration: 200 })
+        pageSetup()
       }
     },
     onAfter: function($container, $newContent) {
       scrollToHash();
-      pageSetup()
 
       if (window.ga) {
         window.ga('send', 'pageview', window.location.pathname);
       }
-      
+
+      // Content must be loaded to setup augmentations
       augmentationsSetup()
     },
     onBefore($container, $newContent) {

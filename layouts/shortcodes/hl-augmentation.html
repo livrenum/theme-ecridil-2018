@@ -1,5 +1,5 @@
 {{- $x := .Get 0 | string -}}
-<div class="hybritexte-augmentation__step-marker"
+<div class="hybritexte-augmentation--step-marker"
       {{ with .Get "before" }}
       data-augmentation-before="{{ . }}"
       {{ end }}
@@ -8,6 +8,9 @@
       {{ end }}
       >
 </div>
+{{- range where $.Page.Params.augmentations "ids" "eq" $x -}}
+{{- partial "hybritexte-augmentation.html" . -}}
+{{- end -}}
 
 {{- range where $.Page.Params.augmentations "id" "eq" $x -}}
 {{- partial "hybritexte-augmentation.html" . -}}

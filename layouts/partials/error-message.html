@@ -10,7 +10,7 @@
 
 <div class="quire-error message is-danger">
   <div class="message-header">
-    <strong>SHORTCODE ERROR: {{ with $shortcode }}{{ . }}{{ end }}</strong>
+    <strong>{{ with $shortcode }}ERREUR DE SHORTCODE: {{ . }} {{ else }}ERREUR{{ end }}</strong>
   </div>
   <div class="message-body">
     {{ with $message }}<p>{{ . }}</p>{{ end }}

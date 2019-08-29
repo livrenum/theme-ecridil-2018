@@ -199,7 +199,7 @@ $quire-page-link-color: $color-primary !default;
 .hybritexte-page__scroll-wrapper {
   position: relative; }
 
-.hybritexte-augmentation__step-marker {
+.hybritexte-augmentation--step-marker {
   position: absolute;
   display: inline-block;
   height: 0;
@@ -292,23 +292,34 @@ $quire-page-link-color: $color-primary !default;
         height: 15vh;
         top: -15vh;
         background-image: linear-gradient(0deg, rgba($light, 1), rgba($light, 0));
-        z-index: 3;
+        z-index: 4;
       }
+      &.is-stuck {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        bottom: 0;
+      }
+    }
+    
+    &__inner {
+      height: 100%;
 
-    &.is-active {
-      position: sticky;
-      
-      top: 0;
-      bottom: 0;
-     }
-   }
-  }
-  &__figure {
-   height: 100%;
-   display: flex;
-   flex-direction: column
-  }
-  &__image {
-   max-height:calc(80vh - 4rem)
+      &.fade-in.js-enabled {
+        opacity: .6;
+        transition: opacity .45s;
+        .is-active & {
+          opacity: 1;
+        }
+      }
+    }
+    &__figure {
+      height: 100%;
+      display: flex;
+      flex-direction: column
+    }
+    &__image {
+      max-height:calc(80vh - 4rem)
+    }
   }
 }

@@ -1,21 +1,90 @@
-<div class="hybritexte-augmentation__augmentation right-column" data-augmentation-id="{{ .id }}">
+{{/*
+  Augmentation Hybritexte
   
-  <figure class="quire-figure">
-    <img class="quire-figure__image hybritexte-augmentation__image"
-         id="{{ .id }}-image"
-         src="{{ .src }}"
-         alt="">
+  This partial displays an augmentation which goes on the right-hand side of a tablet/PC display.
 
-    <figcaption class="quire-figure__caption hybritexte-augmentation__caption">
-      {{ if .title }}
-      <h3>
-        {{ .title | markdownify}}
-      </h3>
-      {{ end }}
+  An augmentation object must be passed (usually defined in a yaml collection associated with the content).
 
-      {{ if .caption}}
-      {{ .caption | markdownify}}
-      {{ end }}
-    </figcaption>
-  </figure>
+  Usage (in layout templates):
+
+  {{ $augmentationObj := dict "type" "image" ... }}
+  {{ partial "hybritexte-augmentation.html" $augmentationObj }}
+
+  Properties:
+  - id
+  - type {string} image|texte|commentaire|audio|video|iframe
+  - title {string}
+  - author {string}
+  - caption {string}
+  - copyright {string}
+  - year_of_publication {string}
+  - src {string} nom du fichier média
+  - location {string}
+  - medium
+
+  Available types:
+  - image
+  - texte
+  - commentaire
+  - audio
+  - video
+  - iframe
+
+*/}}
+
+{{ $validTypes := slice "image" "texte" "audio" "video" "iframe" }}
+
+<div class="hybritexte-augmentation__augmentation right-column" {{ with .id }}data-augmentation-id="{{ . }}" id="hybritexte-augmentation-{{ . }}"{{ end }}>
+  <div class="hybritexte-augmentation__inner fade-in">
+    
+    {{/* BEGIN CONDITIONAL ID BLOCK */}}
+    {{ if eq .id nil }}
+    
+    {{- $errorNoId := dict "message" "Aucun ID n'est associé. <br><br>Exemple :" "example" "id: 1" -}}
+    {{ partial "error-message.html" $errorNoId }}
+
+    {{ else }}
+    
+    {{/* BEGIN VALID TYPES */}}
+    {{ if in $validTypes .type }}
+    
+    {{/* BEGIN IMAGE TYPE */}}
+    {{ if eq .type "texte" }}
+    {{ .caption }}
+    {{ end }}
+    {{/* END IMAGE TYPE */}}
+
+    {{/* BEGIN IMAGE TYPE */}}
+    {{ if eq .type "image" }}
+    <figure class="quire-figure hybritexte-augmentation__figure">
+      <img class="quire-figure__image hybritexte-augmentation__image"
+           id="{{ .id }}-image"
+           src="{{ .src }}"
+           alt="">
+
+      <figcaption class="quire-figure__caption hybritexte-augmentation__caption">
+        {{ if .title }}
+        <h3>
+          {{ .title | markdownify}}
+        </h3>
+        {{ end }}
+
+        {{ if .caption}}
+        {{ .caption | markdownify}}
+        {{ end }}
+      </figcaption>
+    </figure>    
+    {{ end }}
+    {{/* END IMAGE TYPE */}}
+
+    {{ else }}
+    {{- $errorBadType := dict "message" "Le `type` d'augmentation n'est pas supporté ou n'est pas spécifié. <br><br>Exemple :" "example" "type: image" -}}
+    {{ partial "error-message.html" $errorBadType }}
+
+    {{ end }}
+    {{/* END VALID TYPES */}}
+
+    {{/* END CONDITIONAL ID BLOCK */}}
+    {{ end }}
+  </div>
 </div>

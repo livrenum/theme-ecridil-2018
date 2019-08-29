@@ -17,7 +17,7 @@ class Augmentations {
     this.scroller = new scrollama()
       .setup({
         container: '.hybritexte-page__scroll-wrapper',
-        step: '.hybritexte-augmentation__step-marker',
+        step: '.hybritexte-augmentation--step-marker',
         offset: 0,
         progress: true
       })
@@ -25,6 +25,16 @@ class Augmentations {
     window.addEventListener('resize', this.boundResize)
 
     this.scroller.onStepEnter(this.handleStepEnter)
+    this.enableAugmentations()
+  }
+  
+  enableAugmentations() {
+    // js-enabled by default, but could be disabled in augmentations options
+    let augmentations = Array.prototype.slice.call(document.querySelectorAll('[data-augmentation-id]'))
+    
+    augmentations.forEach(function(b) {
+      b.querySelector('.hybritexte-augmentation__inner').classList.add('js-enabled')
+    })
   }
 
   /**
@@ -32,23 +42,23 @@ class Augmentations {
    * @param {object} t trigger object
    */
   handleStepEnter(response) {
-    console.log('handle step enter', response)
-    
     // reset augmentations
-    let a = Array.prototype.slice.call(document.querySelectorAll('.hybritexte-augmentation__augmentation'))
+    let augmentations = Array.prototype.slice.call(document.querySelectorAll('.hybritexte-augmentation__augmentation'))
 
-    a.forEach(function(b) {
-      b.classList.remove('is-active')
+    augmentations.forEach(function(b) {
+      b.classList.remove('is-active', 'is-stuck')
     })
-    // reset augmentations END
+    // END reset augmentations
 
     let beforeId = response.element.getAttribute('data-augmentation-before')
     let afterId = response.element.getAttribute('data-augmentation-after')
 
-    if ('up' === response.direction && beforeId) {
-      document.querySelector('[data-augmentation-id="' + beforeId + '"]').classList.add('is-active')
+    if ('up' === response.direction && afterId) {
+      let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
+      matchingElem && matchingElem.classList.add('is-active')
     } else if ('down' === response.direction && afterId) {
-      document.querySelector('[data-augmentation-id="' + afterId + '"]').classList.add('is-active')
+      let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
+      matchingElem && matchingElem.classList.add('is-active', 'is-stuck')
     }
   }
 
