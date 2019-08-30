@@ -1,6 +1,7 @@
-
 // Augmentations
 // -----------------------------------------------------------------------------
+
+$column-gap: 2rem;
 
 .hybritexte-page__scroll-wrapper {
   position: relative; }
@@ -17,10 +18,9 @@
     content: "";
     position: absolute;
     display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: $column-gap;
+    height: $column-gap;
     background-color: $light;
-    right: -1rem;
     top: 0;
 
     @media (min-width: $hybrilivre-col-breakpoint) {
@@ -39,12 +39,12 @@
 .has-2-columns > :not(.right-column) {
   @media (min-width: $hybrilivre-col-breakpoint) {
     max-width: 50%;
-    max-width: calc(50% - 1.5em);
+    max-width: calc(50% - #{$column-gap});
   }
 }
 .has-2-columns > blockquote:not(.right-column) {
   @media (min-width: $hybrilivre-col-breakpoint) {
-    max-width: calc(50% - 3em);
+    max-width: calc(50% - #{$column-gap} - 1.5em);
   }
 }
 
@@ -70,7 +70,7 @@
   
   @media (min-width: $hybrilivre-col-breakpoint) {
     display: block;
-    max-width: calc(50% - 1.5em);
+    max-width: calc(50% - #{$column-gap});
     position: absolute;
     right: 0;
   }
@@ -81,7 +81,6 @@
     &__augmentation {
       width: 50%;
       float: right;
-      padding-left: 2rem;
       padding-top: 1.5rem;
       padding-bottom: 1.5rem;
       position: absolute;
@@ -119,15 +118,23 @@
         }
       }
     }
-    &__figure {
+    
+    // Types
+    // =====
+
+    // figure type
+    &--figure {
       height: 100%;
       display: flex;
-      flex-direction: column
+      flex-direction: column;
+      justify-content: flex-start;
+      &__image {
+        max-height:calc(80vh - 4rem)
+      }
     }
-    &__image {
-      max-height:calc(80vh - 4rem)
-    }
-    &__text {
+
+    // text type
+    &--text {
       padding-top: 10%;
       font-size: 5vh;
       line-height: 1.15;
@@ -137,9 +144,10 @@
       transition: all .4s;
       height: 100%;
       
-      
       .is-active & {
       }
     }
+    
+    &__text-wrap {}
   }
 }
