@@ -15,26 +15,7 @@
 
 // Variables
 // -----------------------------------------------------------------------------
-$serif: Merriweather, Georgia, serif !default;
-$tablet: 500px !default;
-$desktop: 700px !default;
-$color-primary: #3273dc !default;
-$dark: #363636 !default;
-$light: $paper-tint;
 
-$family-primary: $serif !default;
-$family-secondary: $sans-serif !default;
-$navbar-height: 3rem !default;
-$navbar-height: 3.5rem;
-
-$quire-base-font-size: 17px !default;
-$quire-page-paragraph-style: indent !default;
-$quire-page-header-color: $light !default;
-$quire-page-header-text-color: $dark !default;
-$quire-page-link-color: $color-primary !default;
-$quire-page-link-highlight: $light !default;
-
-$quire-splash-page-color: $color-primary !default;
 
 // html
 // -----------------------------------------------------------------------------
@@ -259,6 +240,14 @@ body {
       @media print {
         color: $page-text-color;
         border-bottom-width: 0;
+      }
+    }
+    
+    a[rel=footnote], a.footnote-return {
+      color: $quire-page-link-color;
+      
+      &:hover {
+        background-color: transparent;
       }
     }
 

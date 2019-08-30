@@ -37,14 +37,14 @@ $color-primary: #7d9792;
 $dark: #221411;
 $paper-tint: #f9f8ec;
 $paper-accent: #ae7d65;
-$light: darken($paper-tint, 10%);
+$light: $paper-tint;
 $white: #ffffff;
-
-$quire-page-link-color: $color-primary;
-$quire-page-link-highlight: lighten($color-primary, 10%);
 
 $page-color: $paper-tint;
 $page-text-color: $dark;
+
+$quire-page-link-color: $color-primary;
+$quire-page-link-highlight: darken($page-color, 15%);
 
 $quire-page-header-color: $paper-tint;
 $quire-page-header-text-color: $dark;
