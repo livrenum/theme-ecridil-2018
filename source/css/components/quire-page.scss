@@ -15,7 +15,7 @@
 
 // Variables
 // -----------------------------------------------------------------------------
-
+$counter-number-offset: -2.5em;
 
 // html
 // -----------------------------------------------------------------------------
@@ -230,6 +230,27 @@ body {
   // Overrides to Bulma's .content styles where needed.
 
   &.content {
+    
+    
+    @if ($quire-page-indent-counters == true) {
+      counter-reset: paragraphs;
+
+      p {
+        &::before {
+          counter-increment: paragraphs;
+          content: counter(paragraphs);
+          position: absolute;
+          left: $counter-number-offset;
+          font-style: normal;
+          color: rgba($page-text-color, 0.4);
+          
+          // if indentation is set, disable it for the pseudo-element
+          @if ($quire-page-paragraph-style == "indent") {
+            text-indent: 0;
+          }
+        }
+      }
+    }
 
     a:not([rel=footnote]):not(.footnote-return) {
       color: $quire-page-link-color;
@@ -288,7 +309,10 @@ body {
 
     @if $quire-page-paragraph-style == "indent" {
       p { margin-bottom: 0; }
-      p + p { text-indent: 2em; }
+      p + p,
+      .hybritexte-augmentation__augmentation + p {
+        text-indent: 2em;
+      }
       blockquote {
         margin: 1em 0 1em 0;
         @media screen and (min-width: $tablet) {
@@ -326,7 +350,6 @@ body {
         margin-top: 0;
       }
     }
-// comment out .content
   }
 
   @media print {
