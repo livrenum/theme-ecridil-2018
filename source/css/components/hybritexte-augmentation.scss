@@ -3,6 +3,15 @@
 
 $column-gap: 2rem;
 
+.container {  
+  // leave left margin for paragraph counters 
+  margin-left: 3 * 14px;
+  
+  +from(600px) {
+    margin-left: 3.5 * 14px;
+  }
+}
+
 .hybritexte-page__scroll-wrapper {
   position: relative; }
 
@@ -34,6 +43,27 @@ $column-gap: 2rem;
 
 .has-2-columns {
   position: relative;
+
+  &.with-separator {
+    // column separator
+    &::before {
+      // do not show column separator under the breakpoint
+      display: none;
+      @media (min-width: $hybrilivre-col-breakpoint) {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        z-index: 0;
+        left: 50%;
+        width: 6%;
+        height: 100%;
+        border-left: 1px solid rgba($page-text-color, 0.15);
+        // background gradient, homothetic page
+      //  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+      }
+    }
+  }
 }
 
 .has-2-columns > :not(.right-column) {
@@ -42,26 +72,10 @@ $column-gap: 2rem;
     max-width: calc(50% - #{$column-gap});
   }
 }
+// ensure blockquotes fit as well, since they have an extra margin-left
 .has-2-columns > blockquote:not(.right-column) {
   @media (min-width: $hybrilivre-col-breakpoint) {
     max-width: calc(50% - #{$column-gap} - 1.5em);
-  }
-}
-
-.hybritexte-page__separator {
-  // do not show column separator under the breakpoint
-  display: none;
-  @media (min-width: $hybrilivre-col-breakpoint) {
-    display: block;
-    position: absolute;
-    top: 0;
-    z-index: 0;
-    left: 50%;
-    width: 6%;
-    height: 100%;
-    border-left: 1px solid rgba($page-text-color, 0.15);
-    // background gradient, homothetic page
-  //  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
   }
 }
 
@@ -76,78 +90,104 @@ $column-gap: 2rem;
   }
 }
 
-@media screen and (min-width: $hybrilivre-col-breakpoint) {
-  .hybritexte-augmentation {
-    &__augmentation {
-      width: 50%;
-      float: right;
-      padding-top: 1.5rem;
-      padding-bottom: 1.5rem;
+.hybritexte-augmentation {
+  &__augmentation {
+    width: 50%;
+    float: right;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    position: absolute;
+    height: 100vh;
+    z-index: 2;
+    // page background color when augmentations overlap
+    background-color: $light;
+
+    &::before {
+      display: block;
+      content: '';
       position: absolute;
-      height: 100vh;
+      width: 100%;
+      height: 15vh;
+      top: -15vh;
+      background-image: linear-gradient(0deg, rgba($light, 1), rgba($light, 0));
+      z-index: 4;
+    }
+    // sticky class
+    &.is-stuck {
+      position: sticky;
       z-index: 2;
-      // page background color when augmentations overlap
-      background-color: $light;
-      
-      &::before {
-        display: block;
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 15vh;
-        top: -15vh;
-        background-image: linear-gradient(0deg, rgba($light, 1), rgba($light, 0));
-        z-index: 4;
-      }
-      &.is-stuck {
-        position: sticky;
-        z-index: 2;
-        top: 0;
-        bottom: 0;
-      }
+      top: 0;
+      bottom: 0;
     }
-    
-    &__inner {
-      height: 100%;
+  }
+  &__inner {
+    height: 100%;
 
-      &.fade-in.js-enabled {
-        opacity: .6;
-        transition: opacity .45s;
-        .is-active & {
-          opacity: 1;
-        }
-      }
-    }
-    
-    // Types
-    // =====
-
-    // figure type
-    &--figure {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      &__image {
-        max-height:calc(80vh - 4rem)
-      }
-    }
-
-    // text type
-    &--text {
-      padding-top: 10%;
-      font-size: 5vh;
-      line-height: 1.15;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      transition: all .4s;
-      height: 100%;
-      
+    // fade inner container
+    &.fade-in.js-enabled {
+      opacity: .6;
+      transition: opacity .45s;
       .is-active & {
+        opacity: 1;
       }
     }
+  }
+
+  // Types
+  // ----------------------------------
+
+  // figure type
+  &--figure {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     
+    .content & {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    &__image {
+      display: block;
+      margin: 0 auto;
+      max-height: calc(80vh - 4rem);
+    }
+    &__caption {
+      font-style: normal;
+      text-align: left;
+      font-size: 1rem;
+      padding: 0 0 0 2rem;
+      margin: 2rem 0 0 1rem;
+      border-left: 2px solid $page-text-color;
+      
+      // bulma override necessary here
+      .content & {
+        font-style: normal;
+      }
+      
+      &__text {
+        
+      }
+    }
+    &__title {
+      font-size: 1rem;
+      font-weight: 500;
+      display: block;
+    }
+  }
+
+  // text type
+  &--text {
+    padding-top: 10%;
+    font-size: 5vh;
+    line-height: 1.15;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: all .4s;
+    height: 100%;
+
     &__text-wrap {}
   }
 }

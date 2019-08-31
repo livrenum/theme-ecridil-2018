@@ -15,7 +15,7 @@
 
 // Variables
 // -----------------------------------------------------------------------------
-$counter-number-offset: -2.5em;
+$counter-number-offset: -1.5em;
 
 // html
 // -----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ body {
   }
   h2:not(:first-child),
   h3:not(:first-child) {
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
 
   h4:not(:first-child),
@@ -216,8 +216,8 @@ body {
 }
 
 .quire-page__content {
-  font-size: 1.125rem;
-  line-height: 1.78;
+  font-size: $page-content-font-size;
+  line-height: $quire-page-line-height;
   font-weight: 400;
   padding-bottom: 8rem;
 
@@ -230,8 +230,7 @@ body {
   // Overrides to Bulma's .content styles where needed.
 
   &.content {
-    
-    
+
     @if ($quire-page-indent-counters == true) {
       counter-reset: paragraphs;
 
@@ -243,6 +242,14 @@ body {
           left: $counter-number-offset;
           font-style: normal;
           color: rgba($page-text-color, 0.4);
+          font-size: .9em;
+          line-height: 1.11em * $quire-page-line-height;
+          
+          @media (min-width: $hybrilivre-col-breakpoint) {
+            font-size: 1em;
+            left: $counter-number-offset * 1.25;
+            line-height: $quire-page-line-height;
+          }
           
           // if indentation is set, disable it for the pseudo-element
           @if ($quire-page-paragraph-style == "indent") {
@@ -434,5 +441,39 @@ body {
   
   &__abstract {
     
+  }
+  
+  &__content {
+    &.content {
+      strong { font-weight: 500; }
+      
+      @if ($quire-page-indent-counters == true) {
+        counter-reset: paragraphs;
+
+        p {
+          &::before {
+            counter-increment: paragraphs;
+            content: counter(paragraphs);
+            position: absolute;
+            left: $counter-number-offset;
+            font-style: normal;
+            color: rgba($page-text-color, 0.4);
+            font-size: .9em;
+            line-height: 1.11em * $quire-page-line-height;
+
+            @media (min-width: $hybrilivre-col-breakpoint) {
+              font-size: 1em;
+              left: $counter-number-offset * 1.25;
+              line-height: $quire-page-line-height;
+            }
+
+            // if indentation is set, disable it for the pseudo-element
+            @if ($quire-page-paragraph-style == "indent") {
+              text-indent: 0;
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -63,21 +63,23 @@
 
     {{/* BEGIN IMAGE TYPE */}}
     {{ if eq .type "image" }}
-    <figure class="quire-figure hybritexte-augmentation--figure">
-      <img class="quire-figure__image hybritexte-augmentation__image"
+    <figure class="hybritexte-augmentation--figure">
+      <img class="hybritexte-augmentation--figure__image"
            id="{{ .id }}-image"
            src="{{ .src }}"
            alt="">
 
-      <figcaption class="quire-figure__caption hybritexte-augmentation__caption">
+      <figcaption class="hybritexte-augmentation--figure__caption">
         {{ if .title }}
-        <h3>
+        <span class="hybritexte-augmentation--figure__title">
           {{ .title | markdownify }}
-        </h3>
+        </span>
         {{ end }}
 
         {{ if .caption}}
-        {{ .caption | markdownify }}
+        <span class="hybritexte-augmentation--figure__caption__text">
+          {{ .caption | markdownify }}
+        </span>
         {{ end }}
       </figcaption>
     </figure>    
