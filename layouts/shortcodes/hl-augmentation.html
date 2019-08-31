@@ -1,17 +1,20 @@
-{{- $x := .Get 0 | string -}}
+{{- $after := default "none" (.Get 0 | string) -}}
+{{- $before := default "none" (.Get 1 | string) -}}
 <div class="hybritexte-augmentation--step-marker"
-      {{ with .Get "before" }}
-      data-augmentation-before="{{ . }}"
-      {{ end }}
-      {{ with $x }}
-      data-augmentation-after="{{ . }}"
-      {{ end }}
+     {{ if not (eq $after "none") }}
+     data-augmentation-after="{{ $after }}"
+     {{ end }}
+     {{ if not (eq $before "none") }}
+     data-augmentation-before="{{ $before }}"
+     {{ end }}
       >
 </div>
-{{- range where $.Page.Params.augmentations "ids" "eq" $x -}}
+{{- if not (eq $after "none") -}}
+{{- range where $.Page.Params.augmentations "id" "eq" $after -}}
 {{- partial "hybritexte-augmentation.html" . -}}
 {{- end -}}
+{{ else }}
 
-{{- range where $.Page.Params.augmentations "id" "eq" $x -}}
-{{- partial "hybritexte-augmentation.html" . -}}
+{{ $emptyShortcode := dict "type" "empty" }}
+{{ partial "hybritexte-augmentation.html" $emptyShortcode }}
 {{- end -}}

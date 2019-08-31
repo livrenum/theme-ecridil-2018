@@ -54,12 +54,25 @@ class Augmentations {
     let beforeId = response.element.getAttribute('data-augmentation-before')
     let afterId = response.element.getAttribute('data-augmentation-after')
 
-    if ('up' === response.direction && afterId) {
-      let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
-      matchingElem && matchingElem.classList.remove('is-active', 'is-stuck')
-    } else if ('down' === response.direction && afterId) {
-      let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
-      matchingElem && matchingElem.classList.add('is-active', 'is-stuck')
+    if ('up' === response.direction) {
+      if (beforeId) {
+        let matchingElem = document.querySelector('[data-augmentation-id="' + beforeId + '"]')
+        matchingElem && matchingElem.classList.add('is-active', 'is-stuck')
+      } else {
+        augmentations.forEach(function(b) {
+          b.classList.remove('is-active', 'is-stuck')
+        })
+      }
+    } else if ('down' === response.direction) {
+      
+      if (afterId) {
+        let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
+        matchingElem && matchingElem.classList.add('is-active', 'is-stuck')
+      } else {
+        augmentations.forEach(function(b) {
+          b.classList.remove('is-active', 'is-stuck')
+        })
+      }
     }
   }
 

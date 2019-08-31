@@ -37,7 +37,10 @@
 
 <div class="hybritexte-augmentation__augmentation right-column" {{ with .id }}data-augmentation-id="{{ . }}" id="hybritexte-augmentation-{{ . }}"{{ end }}>
   <div class="hybritexte-augmentation__inner fade-in">
-    
+    {{/* EMTPY TYPE BLOCK */}}
+    {{ if eq .type "empty" }}
+    {{/* Just an empty block! */}}
+    {{ else }}
     {{/* BEGIN CONDITIONAL ID BLOCK */}}
     {{ if eq .id nil }}
     
@@ -47,7 +50,7 @@
     {{ else }}
     
     {{/* BEGIN VALID TYPES */}}
-    {{ if in $validTypes .type }}
+    {{ if and (isset . "type") (in $validTypes .type) }}
     
     {{/* BEGIN IMAGE TYPE */}}
     {{ if eq .type "text" }}
@@ -65,9 +68,9 @@
     {{ if eq .type "image" }}
     <figure class="hybritexte-augmentation--figure">
       <img class="hybritexte-augmentation--figure__image"
-           id="{{ .id }}-image"
+           {{ with .id }}id="{{ . }}-image"{{ end }}
            src="{{ .src }}"
-           alt="">
+           alt="{{ with .title }}{{ . }}{{ end }}">
 
       <figcaption class="hybritexte-augmentation--figure__caption">
         {{ if .title }}
@@ -94,6 +97,9 @@
     {{/* END VALID TYPES */}}
 
     {{/* END CONDITIONAL ID BLOCK */}}
+    {{ end }}
+    
+    {{/* END EMTPY TYPE BLOCK */}}
     {{ end }}
   </div>
 </div>
