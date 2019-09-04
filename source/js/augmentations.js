@@ -24,7 +24,7 @@ class Augmentations {
 
     window.addEventListener('resize', this.boundResize)
 
-    this.scroller.onStepEnter(this.handleStepEnter)
+//    this.scroller.onStepEnter(this.handleStepEnter)
     this.scroller.onStepExit(this.handleStepEnter)
     this.enableAugmentations()
   }
@@ -54,23 +54,28 @@ class Augmentations {
     let beforeId = response.element.getAttribute('data-augmentation-before')
     let afterId = response.element.getAttribute('data-augmentation-after')
 
-    if ('up' === response.direction) {
+    if (response.direction === 'up') {
       if (beforeId) {
-        let matchingElem = document.querySelector('[data-augmentation-id="' + beforeId + '"]')
-        matchingElem && matchingElem.classList.add('is-active', 'is-stuck')
+        // z-index situation when scrolling up
+        if (afterId) {
+          let matchingAfterAugmentation = document.querySelector('[data-augmentation-id="' + afterId + '"]')
+          matchingAfterAugmentation && matchingAfterAugmentation.classList.remove('is-active', 'is-stuck')
+        }
+
+        let matchingBeforeAugmentation = document.querySelector('[data-augmentation-id="' + beforeId + '"]')
+        matchingBeforeAugmentation && matchingBeforeAugmentation.classList.add('is-active', 'is-stuck')
       } else {
-        augmentations.forEach(function(b) {
-          b.classList.remove('is-active', 'is-stuck')
+        augmentations.forEach(function(a) {
+          a.classList.remove('is-active', 'is-stuck')
         })
       }
-    } else if ('down' === response.direction) {
-      
+    } else if (response.direction === 'down') {
       if (afterId) {
-        let matchingElem = document.querySelector('[data-augmentation-id="' + afterId + '"]')
-        matchingElem && matchingElem.classList.add('is-active', 'is-stuck')
+        let matchingAfterAugmentation = document.querySelector('[data-augmentation-id="' + afterId + '"]')
+        matchingAfterAugmentation && matchingAfterAugmentation.classList.add('is-active', 'is-stuck')
       } else {
-        augmentations.forEach(function(b) {
-          b.classList.remove('is-active', 'is-stuck')
+        augmentations.forEach(function(a) {
+          a.classList.remove('is-active', 'is-stuck')
         })
       }
     }
