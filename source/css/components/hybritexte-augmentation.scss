@@ -3,17 +3,20 @@
 
 $column-gap: 2rem;
 
-.container {  
-  // leave left margin for paragraph counters 
-  margin-left: 3 * 14px;
-  
-  +from(600px) {
-    margin-left: 3.5 * 14px;
+.hybritexte-page {
+  .container {  
+    // leave left margin for paragraph counters 
+    margin-left: 3 * 14px;
+
+    @media (min-width: 600px) {
+      margin-left: 4 * 14px;
+    }
   }
 }
 
 .hybritexte-page__scroll-wrapper {
-  position: relative; }
+  position: relative;
+}
 
 .hybritexte-augmentation--step-marker {
   position: absolute;
@@ -179,8 +182,6 @@ $column-gap: 2rem;
 
   // text type
   &--text {
-    padding-top: 10%;
-    font-size: 5vh;
     line-height: 1.15;
     display: flex;
     flex-direction: column;
@@ -189,5 +190,21 @@ $column-gap: 2rem;
     height: 100%;
 
     &__text-wrap {}
+    
+    &__blockquote {
+      
+      cite, footer  {
+        display: block;
+        margin-top: 1rem;
+      }
+      
+      cite {
+        &::before {
+          content: '—'; // &mdash;
+          display: inline-block;
+          margin-right: .25em;
+        }
+      }
+    }
   }
 }

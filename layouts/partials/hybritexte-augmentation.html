@@ -56,8 +56,14 @@
     {{ if eq .type "text" }}
     <div class="hybritexte-augmentation--text">
       {{ if .content }}
-      <div class="hybritexte-augmentation__text-wrap">
-        {{ .content | markdownify }}
+      <div class="hybritexte-augmentation--text__text-wrap">
+        <blockquote class="hybritexte-augmentation--text__blockquote">
+          {{ .content | markdownify }}
+          
+          {{ with .author }}
+          <cite>{{ . }}</cite>
+          {{ end }}
+        </blockquote>
       </div>
       {{ end }}
     </div>
