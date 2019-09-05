@@ -2,18 +2,26 @@ import 'intersection-observer'
 import scrollama from 'scrollama'
 
 class Augmentations {
-
+  /**
+   * Constructor: logic is run when a new instance is born
+   */
   constructor() {
     this.boundResize = this.resize.bind(this)
     this.setupAugmentations()
   }
 
+  /**
+   * Activate scroll intersection behavior
+   */
   setupAugmentations() {
     
+    // check if there is a correct scroll wrapper
+    // if not, we cannot use the scrolling functionality
     if (!document.querySelector('.hybritexte-page__scroll-wrapper')) {
       return
     }
 
+    // setup new scrollama instance
     this.scroller = new scrollama()
       .setup({
         container: '.hybritexte-page__scroll-wrapper',
@@ -22,17 +30,17 @@ class Augmentations {
         progress: true
       })
 
+    // Could be .onStepEnter or .onStepExit, but only 1 please
+    // because the marker is so small, we don't want to trigger
+    // twice very quickly (stepenter + stepexit in a single scroll)
+    this.scroller.onStepExit(this.handleStep)
+
+    // attach event listeners
     window.addEventListener('resize', this.boundResize)
 
-//    this.scroller.onStepEnter(this.handleStepEnter)
-    this.scroller.onStepExit(this.handleStepEnter)
-    this.enableAugmentations()
-  }
-  
-  enableAugmentations() {
-    // js-enabled by default, but could be disabled in augmentations options
-    let augmentations = Array.prototype.slice.call(document.querySelectorAll('[data-augmentation-id]'))
     
+    let augmentations = Array.prototype.slice.call(document.querySelectorAll('[data-augmentation-id]'))
+    // js-enabled by default, but could be disabled in augmentations options
     augmentations.forEach(function(b) {
       b.querySelector('.hybritexte-augmentation__inner').classList.add('js-enabled')
     })
@@ -40,15 +48,17 @@ class Augmentations {
 
   /**
    * Handle step trigger
-   * @param {object} t trigger object
+   * @param {object} response Scrollama trigger object
    */
-  handleStepEnter(response) {
-    // reset augmentations
+  handleStep(response) {
     let augmentations = Array.prototype.slice.call(document.querySelectorAll('.hybritexte-augmentation__augmentation'))
-
-    augmentations.forEach(function(b) {
+    // reset augmentations
+    // actually we don't want this to be reset for all augmentations, every time, necessarily.
+    // see per-direction logic below
+//
+//    augmentations.forEach(function(b) {
 //      b.classList.remove('is-active', 'is-stuck')
-    })
+//    })
     // END reset augmentations
 
     let beforeId = response.element.getAttribute('data-augmentation-before')
@@ -81,12 +91,18 @@ class Augmentations {
     }
   }
 
+  /**
+   * Method to handle window resize logic
+   */
   resize() {
     if (this.scroller) {
       this.scroller.resize()
     }
   }
-  
+
+  /**
+   * Method to destroy the instance and remove listeners
+   */
   destroy() {
     window.removeEventListener('resize', this.boundResize)
     if (this.scroller) {

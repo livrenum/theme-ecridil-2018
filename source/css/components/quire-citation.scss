@@ -6,6 +6,7 @@
 // -----------------------------------------------------------------------------
 //$color-primary: #3273dc !default;
 $quire-page-link-color: $color-primary !default;
+$fadeDuration: .35s;
 
 
 // .quire-citation
@@ -28,9 +29,17 @@ $quire-page-link-color: $color-primary !default;
     z-index: 1;
     bottom: 150%;
     left: 50%;
-    margin-left: -200px;
+    margin-left: -150px;
+  }
+  .quire-citation__content {
+    transition: visibility 0s $fadeDuration, transform $fadeDuration ease 0s, opacity $fadeDuration ease 0s;
+    transform: translateX(-14px);
+    opacity: 0;
   }
   &:hover .quire-citation__content {
     visibility: visible;
+    transition: visibility 0s 0s, transform $fadeDuration, opacity $fadeDuration;
+    transform: translateX(0);
+    opacity: 1;
   }
 }

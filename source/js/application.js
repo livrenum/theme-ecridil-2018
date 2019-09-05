@@ -262,6 +262,37 @@ function scrollToHash() {
   }
 }
 
+function smoothScrollFootnotes() {
+  // activate footnotes, which are found in the #content div
+  let $content = $('#content')
+  
+  $content.find('a[href^=\\#fn]').on('click', function (ev) {
+    ev.preventDefault()
+    
+    let targetHash = $(this).attr('href')
+    
+    let targetElem = document.getElementById(targetHash.slice(1))
+    console.log('$targetelem', $(targetHash.replace(':', '\\:')))
+    
+    $(targetHash.replace(':', '\\:')).velocity('scroll', {
+      duration: 1800,
+      easing: [0.19, 1, 0.22, 1],
+      complete: function () {
+        // Remain semantic, put back the hash in the URL
+        window.location.hash = targetHash
+      }
+    })
+  })
+}
+
+/**
+ * Remove listeners on footnote anchors
+ */
+function destroySmoothScrollFootnotes() {
+  let $content = $('#content')
+  $content.find('a[href^=\\#fn]').off('click')
+}
+
 /**
  * pageSetup
  * @description This function is called after each smoothState reload.
@@ -283,6 +314,7 @@ function pageSetup() {
 function pageTeardown() {
   navigationTeardown()
   destroyAugmentations()
+  destroySmoothScrollFootnotes()
 }
 
 // Start
@@ -295,6 +327,7 @@ globalSetup()
 $(document).ready(() => {
   pageSetup()
   augmentationsSetup()
+  smoothScrollFootnotes()
 
   $('#container').smoothState({
     scroll: false,
@@ -308,12 +341,13 @@ $(document).ready(() => {
       duration: 200,
       render($container, $newContent) {
         $container.html($newContent)
-        $container.velocity('fadeIn', { duration: 200 })
+        $container.velocity('fadeIn', { duration: 250 })
         pageSetup()
       }
     },
     onAfter: function($container, $newContent) {
       scrollToHash();
+      smoothScrollFootnotes()
 
       if (window.ga) {
         window.ga('send', 'pageview', window.location.pathname);
