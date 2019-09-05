@@ -8,15 +8,16 @@
 <div class="{{ partial "page-class.html" . }}" id="main" role="main">
   {{ partial "page-header.html" . }}
 
-  {{ with .Content }}
-  <section class="section quire-page__content" id="content">
+  <section class="section quire-page__content content" id="content">
     <div class="container">
-      <div class="content">
-        {{ . }}
-      </div>
+
+      {{ if .Content }}
+      {{ .Content }}
+
+      {{ partial "page-bibliography.html" . }}
+      {{ end }}
     </div>
   </section>
-  {{ end }}
 
 </div>
 {{ end }}

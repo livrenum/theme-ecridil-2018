@@ -257,6 +257,24 @@ body {
           }
         }
       }
+      
+      .footnotes {
+        p {   
+          &::before {
+            // setting `content` to `non` prevents the pseudo-element
+            // from being displayed at all
+            content: none;
+            // prevent further paragraph counter increments
+            counter-increment: none;
+          }
+        }
+
+        li {
+          &:target {
+            animation: highlight 3s;
+          }
+        }
+      }
     }
 
     a:not([rel=footnote]):not(.footnote-return) {
@@ -276,6 +294,15 @@ body {
       
       &:hover {
         background-color: transparent;
+      }
+    }
+    
+    .footnote-ref {
+      &:target {
+        animation: highlight 3s;
+        &::before {
+          position: absolute;
+        }
       }
     }
 
@@ -374,6 +401,10 @@ body {
       column-count: 1;
       margin: 0 .75in;
     }
+  }
+  
+  .footnotes {
+    font-size: 1rem;
   }
 }
 

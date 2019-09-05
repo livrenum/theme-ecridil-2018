@@ -4,6 +4,9 @@
 $column-gap: 2rem;
 
 .hybritexte-page {
+  &__content {
+    padding-bottom: 25%;
+  }
   .container {  
     // leave left margin for paragraph counters 
     margin-left: 3 * 14px;

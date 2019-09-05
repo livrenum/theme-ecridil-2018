@@ -48,8 +48,11 @@
       {{/* partial "hybritexte-augmentation.html" . */}}
       {{/* end */}}
 
+      {{ if .Content }}
       {{ .Content }}
+
       {{ partial "page-bibliography.html" . }}
+      {{ end }}
     </div>
   </section>
 </article>

@@ -242,55 +242,80 @@ function destroyAugmentations() {
  * taking into account the height of the navbar.
  */
 function scrollToHash() {
-  let $scroller = $("#main")
-  let $navbar = $(".quire-navbar")
+  // only target a navbar that is fixed
+  let $navbar = $('.quire-navbar.is-fixed')
   let targetHash = window.location.hash;
 
-  if(targetHash) {
+  if (targetHash) {
     let targetHashEl = document.getElementById(targetHash.slice(1))
     let $targetHashEl = $(targetHashEl)
 
-    if($targetHashEl.length){
-      let newPosition = $targetHashEl.offset().top
-      if ($navbar.length) {
-        newPosition -= $navbar.height()
-      }
-      $scroller.scrollTop(newPosition)
+    if ($targetHashEl.length) {
+      $targetHashEl.velocity('scroll', {
+        duration: 1200,
+        offset: $navbar.height() || 0
+      })
+    } else {
+      // if no hash target element is found,
+      // default to scrolling the document to the top
+      $('html').velocity('scroll', {
+        duration: 1200,
+        offset: $navbar.height() || 0
+      })
     }
-  } else {
-    $scroller.scrollTop(0)
   }
 }
 
-function smoothScrollFootnotes() {
-  // activate footnotes, which are found in the #content div
+let smoothAnchorsEnabled = false
+function smoothScrollAnchors() {
+  // if smooth scrolling to footnotes is already enabled,
+  // destroy event listeners and start over
+  if (smoothAnchorsEnabled) {
+    destroySmoothAnchors()
+  }
+
+  // anchors (incl. footnotes) are found in the #content div
   let $content = $('#content')
   
-  $content.find('a[href^=\\#fn]').on('click', function (ev) {
+  $content.find('a[href^=\\#]').on('click', function (ev) {
+    // prevent default behavior
     ev.preventDefault()
     
     let targetHash = $(this).attr('href')
     
     let targetElem = document.getElementById(targetHash.slice(1))
-    console.log('$targetelem', $(targetHash.replace(':', '\\:')))
-    
-    $(targetHash.replace(':', '\\:')).velocity('scroll', {
-      duration: 1800,
+
+    $(targetElem).velocity('scroll', {
+      duration: 1200,
+      // easeOutExpo bezier curve
+      // https://easings.net/#easeOutExpo
       easing: [0.19, 1, 0.22, 1],
       complete: function () {
         // Remain semantic, put back the hash in the URL
+        // BUT change the hash when the animation is
+        // *complete* otherwise the browser will instantly jump
+        // to the target and not animate scroll.
         window.location.hash = targetHash
       }
     })
   })
+
+  // flag that we have enabled smooth scrolling
+  smoothAnchorsEnabled = true
 }
 
 /**
  * Remove listeners on footnote anchors
  */
-function destroySmoothScrollFootnotes() {
+function destroySmoothAnchors() {
   let $content = $('#content')
-  $content.find('a[href^=\\#fn]').off('click')
+  
+  // find anchors (incl. footnotes), a[href] starting with `#`
+  // escape hash for jquery
+  $content.find('a[href^=\\#]').off('click')
+  
+  // flag that we have disabled smooth scrolling for footnotes
+  smoothAnchorsEnabled = false
 }
 
 /**
@@ -314,7 +339,7 @@ function pageSetup() {
 function pageTeardown() {
   navigationTeardown()
   destroyAugmentations()
-  destroySmoothScrollFootnotes()
+  destroySmoothAnchors()
 }
 
 // Start
@@ -327,7 +352,7 @@ globalSetup()
 $(document).ready(() => {
   pageSetup()
   augmentationsSetup()
-  smoothScrollFootnotes()
+  smoothScrollAnchors()
 
   $('#container').smoothState({
     scroll: false,
@@ -347,7 +372,7 @@ $(document).ready(() => {
     },
     onAfter: function($container, $newContent) {
       scrollToHash();
-      smoothScrollFootnotes()
+      smoothScrollAnchors()
 
       if (window.ga) {
         window.ga('send', 'pageview', window.location.pathname);
