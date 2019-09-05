@@ -7,7 +7,7 @@
 */}}
 
 {{ define "main" }}
-<article class="{{ partial "page-class.html" . }} quire-essay hybritexte-page" id="main" role="main">
+<article class="{{ partial "page-class.html" . }} quire-page hybritexte-page" id="main" role="main">
   {{/* partial "page-header.html" . */}}
   <header class="hybritexte-page__header">
     <div class="container is-fluid has-2-columns">
@@ -50,7 +50,6 @@
 
       {{ if .Content }}
       {{ .Content }}
-
       {{ partial "page-bibliography.html" . }}
       {{ end }}
     </div>

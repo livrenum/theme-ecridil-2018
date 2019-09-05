@@ -200,10 +200,10 @@
       <div class="media-left">
         <img class="image quire-contributor__pic"
             src='{{ with index . 5 }}{{ printf "%s/%s" ($.Scratch.Get "imageDir") . | relURL }}{{ end }}'
-            alt="Picture of {{ index . 0 }}"/>
+            alt="Photo de {{ index . 0 }}"/>
       </div>
       {{- end -}}
-      <div class="quire-contributor__bio">
+      <div class="quire-contributor__bio disabled-paragraph-counter">
         {{ if ne (index . 3) "n/a" }}{{ markdownify (index . 3) }}{{ end }}
       </div>
       

@@ -78,10 +78,12 @@ $navbar-height: 3rem !default;
       width: 100%;
 
       .quire-page {
-        flex: 1 1 auto;
-        -webkit-overflow-scrolling: touch;
-        overflow-y: scroll;
-        position: relative;
+        // hybrilivre : we don't want the code below
+        // scrolling is done normally, on the html/body element
+//        flex: 1 1 auto;
+//        -webkit-overflow-scrolling: touch;
+//        overflow-y: scroll;
+//        position: relative;
       }
 
       .section {

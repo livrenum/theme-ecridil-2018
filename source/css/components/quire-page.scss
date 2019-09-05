@@ -15,7 +15,19 @@
 
 // Variables
 // -----------------------------------------------------------------------------
-$counter-number-offset: -1.5em;
+$counter-number-offset: -2em;
+
+%disabled-paragraph-counter {
+  p {
+    &::before {
+      // setting `content` to `non` prevents the pseudo-element
+      // from being displayed at all
+      content: none;
+      // prevent further paragraph counter increments
+      counter-increment: none;
+    }
+  }
+}
 
 // html
 // -----------------------------------------------------------------------------
@@ -41,6 +53,7 @@ body {
   h1, h2, h3, h4, h5, h6 {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    font-weight: 500;
   }
 
   h1:not(:first-child) {
@@ -60,15 +73,15 @@ body {
   h1,
   &__header__title {
     font-family: $family-secondary;
-    font-size: 3.3rem;
-    font-weight: 300;
-    font-style: italic;
+    font-size: 3rem;
+//    font-weight: 500;
+//    font-style: normal;
     line-height: 1.14;
     em {
       font-style: normal;
     }
     @media screen and (min-width: $tablet) {
-      font-size: 3.75rem;
+      font-size: 3rem;
       line-height: 1.07;
     }
     @if $family-secondary == $serif {
@@ -90,7 +103,7 @@ body {
   h2 {
     font-family: $family-secondary;
     font-size: 2.7rem;
-    font-weight: 300;
+    font-weight: 500;
     line-height: 1.09;
     @if $family-secondary == $serif {
       font-size: 2.5rem;
@@ -107,12 +120,12 @@ body {
   &__header__contributor {
     font-family: $family-secondary;
     font-size: 1.75rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.143;
   }
   &__header__subtitle {
     display: block;
-    font-style: italic;
+    font-style: normal;
     font-weight:400;
     margin-top: 1rem;
     em {
@@ -145,7 +158,7 @@ body {
     font-weight:400;
   }
   h5 {
-    font-weight: 600;
+    font-weight: 500;
   }
   h5,
   h6 {
@@ -247,28 +260,22 @@ body {
           
           @media (min-width: $hybrilivre-col-breakpoint) {
             font-size: 1em;
-            left: $counter-number-offset * 1.25;
             line-height: $quire-page-line-height;
           }
           
           // if indentation is set, disable it for the pseudo-element
+          // as the counter number will fall off the page
           @if ($quire-page-paragraph-style == "indent") {
             text-indent: 0;
           }
         }
       }
       
-      .footnotes {
-        p {   
-          &::before {
-            // setting `content` to `non` prevents the pseudo-element
-            // from being displayed at all
-            content: none;
-            // prevent further paragraph counter increments
-            counter-increment: none;
-          }
-        }
+      .footnotes, .right-column, .disabled-paragraph-counter {
+        @extend %disabled-paragraph-counter;
+      }
 
+      .footnotes {
         li {
           &:target {
             animation: highlight 3s;
@@ -405,6 +412,22 @@ body {
   
   .footnotes {
     font-size: 1rem;
+    
+    hr {
+      display: none;
+    }
+  }
+  
+  .backmatter {
+    h2 {
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      line-height: 1.2;
+      margin-top: 2rem;
+      padding-bottom: .2em;
+      border-bottom: 1px solid rgba($page-text-color, .15);
+    }
   }
 }
 
@@ -435,11 +458,12 @@ body {
 
     &__number {
       display: inline-block;
-      font-size: 4rem;
+      font-size: 4.5rem;
       position: relative;
-      margin-left: 1.25em;
       z-index: 1;
-      margin-bottom: .25rem;
+      margin-bottom: .5rem;
+
+      margin-left: 1.28em; // must match pseudo-element negative left
 
       &::before {
         content: '';
@@ -448,8 +472,9 @@ body {
         background-color: $paper-accent;
         position: absolute;
         bottom: -.1rem;
-        left: -1.25em;
         z-index: -1;
+
+        left: -1.28em; // must match number margin-left
       }
     }
 
@@ -475,36 +500,6 @@ body {
   }
   
   &__content {
-    &.content {
-      strong { font-weight: 500; }
-      
-      @if ($quire-page-indent-counters == true) {
-        counter-reset: paragraphs;
-
-        p {
-          &::before {
-            counter-increment: paragraphs;
-            content: counter(paragraphs);
-            position: absolute;
-            left: $counter-number-offset;
-            font-style: normal;
-            color: rgba($page-text-color, 0.4);
-            font-size: .9em;
-            line-height: 1.11em * $quire-page-line-height;
-
-            @media (min-width: $hybrilivre-col-breakpoint) {
-              font-size: 1em;
-              left: $counter-number-offset * 1.25;
-              line-height: $quire-page-line-height;
-            }
-
-            // if indentation is set, disable it for the pseudo-element
-            @if ($quire-page-paragraph-style == "indent") {
-              text-indent: 0;
-            }
-          }
-        }
-      }
-    }
+    
   }
 }

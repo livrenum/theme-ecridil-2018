@@ -223,6 +223,7 @@ function navigationTeardown() {
 let augmentations
 function augmentationsSetup() {
   if (!augmentations) {
+    console.log('about to setup augmentations')
     augmentations = new Augmentations()
   } else {
   }

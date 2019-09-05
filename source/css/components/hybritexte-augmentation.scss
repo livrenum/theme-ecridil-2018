@@ -36,14 +36,13 @@ $column-gap: 2rem;
       content: "";
       position: absolute;
       display: inline-block;
-      width: $column-gap;
-      height: $column-gap;
+      width: 1.5rem;
+      height: 1.5rem;
       background-color: $light;
       top: 0;
-
-        left: 50%;
-        border-top: 1px solid rgba($page-text-color, 0.1);;
-        border-bottom: 1px solid rgba($page-text-color, 0.1);;
+      left: 50%;
+      border-top: 1px solid rgba($page-text-color, 0.1);
+      border-bottom: 1px solid rgba($page-text-color, 0.1);
     }
   }
 }
@@ -93,6 +92,8 @@ $column-gap: 2rem;
   @media (min-width: $hybrilivre-col-breakpoint) {
     display: block;
     max-width: calc(50% - #{$column-gap});
+    width: 50%;
+    float: right;
     position: absolute;
     right: 0;
   }
@@ -105,17 +106,22 @@ $column-gap: 2rem;
     margin-bottom: 2rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    border-radius: 3px;
+
+    // hide empty augmentation block on 1-column layout
+    // since it serves no purpose (hiding previsou augmentation)
+    &.is-empty {
+      display: none;
+    }
 
     // 2-column only styles
     @media (min-width: $hybrilivre-col-breakpoint) {
-      width: 50%;
-      float: right;
+//      width: 50%;
+//      float: right;
       padding-top: 1.5rem;
       padding-bottom: 1.5rem;
       margin-top: 0;
       margin-bottom: 0;
-      position: absolute;
+//      position: absolute;
       height: 100vh;
       z-index: 2;
       // page background color when augmentations overlap
@@ -137,6 +143,12 @@ $column-gap: 2rem;
         z-index: 2;
         top: 0;
         bottom: 0;
+      }
+  
+      // show empty augmentation block in 2 columns to hide / fade out
+      // the previous augmentation
+      &.is-empty {
+        display: block;
       }
     } // END 2-column only styles
     &__inner {
