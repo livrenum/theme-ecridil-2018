@@ -29,32 +29,40 @@
   - comment
   - audio
   - video
+  - youtube
   - iframe
 
 */}}
 
-{{ $validTypes := slice "image" "text" "comment" "audio" "video" "iframe" }}
+{{ if isset . "sticky" }}
+{{ $.Scratch.Set "sticky" .sticky }}
+{{ else }}
+{{ $.Scratch.Set "sticky" true }}
+{{ end }}
+
+{{ $validTypes := slice "image" "text" "comment" "audio" "video" "youtube" "iframe" }}
 
 <div class="hybritexte-augmentation__augmentation right-column {{ if eq .type "empty" }}is-empty{{ end }}" {{ with .id }}data-augmentation-id="{{ . }}" id="hybritexte-augmentation-{{ . }}"{{ end }}>
   <div class="hybritexte-augmentation__inner fade-in">
-    {{/* EMTPY TYPE BLOCK */}}
+    
+    {{/* -------------------- EMTPY TYPE BLOCK -------------------- */}}
     {{ if eq .type "empty" }}
     {{/* Just an empty block! */}}
     {{ else }}
-    {{/* BEGIN CONDITIONAL ID BLOCK */}}
+    {{/* -------------------- BEGIN CONDITIONAL ID BLOCK -------------------- */}}
     {{ if eq .id nil }}
     
     {{- $errorNoId := dict "message" "Aucun ID n'est associé. <br><br>Exemple :" "example" "id: 1" -}}
     {{ partial "error-message.html" $errorNoId }}
 
     {{ else }}
-    
-    {{/* BEGIN VALID TYPES */}}
+
+    {{/* -------------------- BEGIN VALID TYPES -------------------- */}}
     {{ if and (isset . "type") (in $validTypes .type) }}
-    
-    {{/* BEGIN IMAGE TYPE */}}
+    <div class="hybritexte-augmentation--{{ .type }}">
+  
+    {{/* -------------------- BEGIN TEXT TYPE -------------------- */}}
     {{ if eq .type "text" }}
-    <div class="hybritexte-augmentation--text">
       {{ if .content }}
       <div class="hybritexte-augmentation--text__text-wrap">
         <blockquote class="hybritexte-augmentation--text__blockquote">
@@ -66,11 +74,10 @@
         </blockquote>
       </div>
       {{ end }}
-    </div>
     {{ end }}
-    {{/* END IMAGE TYPE */}}
+    {{/* -------------------- END TEXT TYPE -------------------- */}}
 
-    {{/* BEGIN IMAGE TYPE */}}
+    {{/* -------------------- BEGIN IMAGE TYPE -------------------- */}}
     {{ if eq .type "image" }}
     <figure class="hybritexte-augmentation--figure">
       <img class="hybritexte-augmentation--figure__image"
@@ -93,19 +100,46 @@
       </figcaption>
     </figure>    
     {{ end }}
-    {{/* END IMAGE TYPE */}}
+    {{/* -------------------- END IMAGE TYPE -------------------- */}}
 
+    {{/* -------------------- BEGIN YOUTUBE TYPE -------------------- */}}
+    {{ if eq .type "youtube" }}
+    {{ $youtubeId := .youtubeId | string }}
+    {{ $title := .title | markdownify | htmlEscape }}
+    <figure class="hybritexte-augmentation--figure">
+      <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+        <iframe src="https://www.youtube.com/embed/{{ $youtubeId }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="{{ $title }}"></iframe>
+      </div>
+
+    <figcaption class="hybritexte-augmentation--figure__caption">
+      {{ if .title }}
+      <span class="hybritexte-augmentation--figure__title">
+        {{ .title | markdownify }}
+      </span>
+      {{ end }}
+
+      {{ if .caption}}
+      <span class="hybritexte-augmentation--figure__caption__text">
+        {{ .caption | markdownify }}
+      </span>
+      {{ end }}
+    </figcaption>
+    {{ end }}
+    {{/* -------------------- END YOUTUBE TYPE -------------------- */}}
+
+    </div>
     {{ else }}
+
     {{- $errorBadType := dict "message" "Le `type` d'augmentation n'est pas supporté ou n'est pas spécifié. <br><br>Exemple :" "example" "type: image" -}}
     {{ partial "error-message.html" $errorBadType }}
 
     {{ end }}
-    {{/* END VALID TYPES */}}
+    {{/* -------------------- END VALID TYPES -------------------- */}}
 
-    {{/* END CONDITIONAL ID BLOCK */}}
     {{ end }}
-    
-    {{/* END EMTPY TYPE BLOCK */}}
+    {{/* -------------------- END CONDITIONAL ID BLOCK -------------------- */}}
+
     {{ end }}
+    {{/* -------------------- END EMTPY TYPE BLOCK -------------------- */}}
   </div>
 </div>
