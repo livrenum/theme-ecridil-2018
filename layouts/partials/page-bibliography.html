@@ -1,3 +1,12 @@
+{{ $bibliography := getJSON "content/" .File.Dir "bib.json" }}
+
+{{/* TODO - Use bibliography located in same dir */}}
+{{/* range $bibliography */}}
+{{/*
+<p>ID: {{ .id }}</p>
+*/}}
+{{/* end */}}
+
 {{ if ($.Scratch.GetSortedMapValues "cited") }}
 <section class="quire-page__content__references backmatter">
     <h2 id="bibliography">Bibliographie</h2>
