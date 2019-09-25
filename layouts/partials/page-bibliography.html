@@ -1,5 +1,9 @@
+{{ if eq .Page.Type "hybritexte" }}
+{{ $bibliographyPath := path.Join .File.Dir "bib.json" }}
+{{ if (fileExists $bibliographyPath) }}
 {{ $bibliography := getJSON "content/" .File.Dir "bib.json" }}
-
+{{ end }}
+{{ end }}
 {{/* TODO - Use bibliography located in same dir */}}
 {{/* range $bibliography */}}
 {{/*
@@ -14,8 +18,10 @@
     <dl>
         {{ range ($.Scratch.GetSortedMapValues "cited") }}
         {{/* the id is in a span because Pandoc otherwise strips them out from dt and dd for EPUBs for some reason */}}
-        <dt><span id="{{ urlize (index . 0) }}">{{ markdownify (index . 0) }}</span></dt>
+      <div id="{{ urlize (index . 0) }}">
+        <dt><span>{{ markdownify (index . 0) }}</span></dt>
         <dd>{{ markdownify (index . 1)}}</dd>
+      </div>
         {{ end }}
     </dl>
     {{ else }}

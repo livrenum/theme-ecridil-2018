@@ -25,10 +25,12 @@ $family-secondary: $sans-serif;
 
 $quire-base-font-size: 14px;
 $page-content-font-size: 1.125rem;
-$quire-page-paragraph-style: indent;
+$quire-page-paragraph-style: null;
+// make the value null for paragraphs with no indent and a line space between
 $quire-page-indent-counters: true;
 $quire-page-indent-size: 2em;
-// make the value null for paragraphs with no indent and a line space between
+$blockquote-left-padding: 1.5em;
+$blockquote-font-size: 1rem;
 
 
 // Colors
@@ -83,7 +85,7 @@ $cover-overlay-image: 'pattern-1.png';
 $quire-cover-font-family: $sans-serif;
 $quire-cover-text-color: $dark;
 
-$quire-page-line-height: 1.78;
+$quire-page-line-height: 1.41;
 
 $quire-cover-text-scale: 1;
 // use decimal numbers (such as .8 or 1.3) to increase and decrease size

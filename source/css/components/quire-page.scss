@@ -15,7 +15,9 @@
 
 // Variables
 // -----------------------------------------------------------------------------
-$counter-number-offset: -2em;
+$counter-number-offset: .75em; // must be of same unit as `$quire-page-indent-size`
+$counter-font-size:     .67em; // must be of same unit as `$quire-page-indent-size`
+$counter-number-width:  2em; // must be of same unit as `$counter-number-offset`
 
 %disabled-paragraph-counter {
   p {
@@ -252,15 +254,15 @@ body {
           counter-increment: paragraphs;
           content: counter(paragraphs);
           position: absolute;
-          left: $counter-number-offset;
+          left: 0 - $counter-number-offset - $counter-number-width;
+          text-align: right;
+          width: $counter-number-width;
           font-style: normal;
+          font-size: $counter-font-size;
           color: rgba($page-text-color, 0.4);
-          font-size: .9em;
-          line-height: 1.11em * $quire-page-line-height;
+          line-height: $quire-page-line-height * 1em / $counter-font-size;
           
           @media (min-width: $hybrilivre-col-breakpoint) {
-            font-size: 1em;
-            line-height: $quire-page-line-height;
           }
           
           // if indentation is set, disable it for the pseudo-element
@@ -271,7 +273,9 @@ body {
         }
       }
       
-      .footnotes, .right-column, .disabled-paragraph-counter {
+      // no paragraph counters on these
+      
+      .footnotes, .right-column, .disabled-paragraph-counter, blockquote {
         @extend %disabled-paragraph-counter;
       }
 
@@ -280,6 +284,10 @@ body {
           &:target {
             animation: highlight 3s;
           }
+        }
+        
+        p {
+          margin-bottom: .5em;
         }
       }
     }
@@ -305,8 +313,13 @@ body {
     }
     
     .footnote-ref {
+      font-size: .67em;
+      margin: 0 .21em;
+      top: -.67em;
+      position: relative;
+      vertical-align: baseline;
       &:target {
-        animation: highlight 3s;
+        animation: highlight 5s;
         &::before {
           position: absolute;
         }
@@ -325,18 +338,13 @@ body {
     }
 
     blockquote {
-      padding: 0 0 0 1.5em;
+      padding: 0 0 0 $blockquote-left-padding;
       margin: 1.5em 0 1.5em 0;
-      border-left: 2px solid $page-text-color;
-      @media screen and (min-width: $tablet) {
-        padding: 0 0 0 1.5em;
-        margin: 1.5em 0 1.5em 1.5em;
-      }
+      font-size: $blockquote-font-size;
+      border-left: none;
       background-color: transparent;
-      font-style: italic;
-      em {
-        font-style: normal;
-      }
+      font-style: normal;
+
       @media print {
         border-left-width: 0;
       }
@@ -356,11 +364,10 @@ body {
       }
       blockquote {
         margin: 1em 0 1em 0;
-        @media screen and (min-width: $tablet) {
-          margin: 1.5em 0 1.5em 1.5em;
-        }
       }
-    }
+    } @else {
+      p { margin-bottom: 1em; }
+    } 
 
     @media print {
       h2 {

@@ -24,6 +24,7 @@ import Map from './map.js'
 import DeepZoom from './deepzoom.js'
 import Navigation from './navigation.js'
 import Augmentations from './augmentations.js'
+import espaceFine from './espacefine.js'
 
 /**
  * toggleMenu
@@ -198,6 +199,11 @@ function mapSetup() {
   }
 }
 
+function espacesInsecablesSetup() {
+  console.log('espoace fine est ', espaceFine)
+  espaceFine()
+}
+
 function deepZoomSetup() {
   let deepZoom = document.getElementById('js-deepzoom')
 
@@ -330,6 +336,7 @@ function pageSetup() {
   deepZoomSetup()
   sliderSetup()
   navigationSetup()
+  espacesInsecablesSetup()
 }
 
 /**
@@ -374,6 +381,7 @@ $(document).ready(() => {
     onAfter: function($container, $newContent) {
       scrollToHash();
       smoothScrollAnchors()
+      espacesInsecablesSetup()
 
       if (window.ga) {
         window.ga('send', 'pageview', window.location.pathname);
