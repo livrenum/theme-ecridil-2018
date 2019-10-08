@@ -1,0 +1,50 @@
+{{/* 
+  APA-Style Citation
+
+  Template : 
+
+    Author Surname, First Initial. Second Initial. (Year). <i>Book title: Subtitle</i>. Place of Publication: Publisher.
+
+*/}}
+<div>
+
+  {{/* -------------------- BEGIN BOOK TYPE -------------------- */}}
+  {{ if eq .type "book" }}
+  <dt>
+    {{/* the id is in a span because Pandoc otherwise strips them out from dt and dd for EPUBs for some reason */}}
+    <span id="{{ urlize .id }}"></span>
+    {{ range .author -}} {{/* BEGIN author */}}
+      {{ with .family -}}
+        {{ . }}
+      {{- end }}, 
+      {{ with .given -}}
+        {{ substr . 0 1 }}. {{/* First letter (initial). */}}
+      {{- end }} 
+      {{ with .secondInitial -}}
+        {{ . }}.
+      {{- end }} 
+    {{- end }} {{/* END author */}}
+    {{ range .issues -}} {{/* END issues */}}
+    ({{ echoParam . "date-part" }}).
+    {{- end }} {{/* END issues */}}
+  </dt>
+  <dd>
+    {{ if .title }}
+      <i>{{/* italize title */}}
+        {{- .title | markdownify }}
+        {{- if .subtitle }}: 
+        {{ .subtitle | markdownify }}
+        {{- end }}
+      </i>.
+    {{- end }}
+    {{ if isset . "publisher-place" -}}
+      {{ echoParam . "publisher-place" | markdownify }}
+    {{- end }}
+    {{ if and (isset . "publisher") (isset . "publisher") }}: {{ end -}}
+    {{ with .publisher -}}
+      {{ . }}
+    {{- end }}.
+    {{/* -------------------- END BOOK TYPE -------------------- */}}
+    {{- end -}}
+  </dd>
+</div>

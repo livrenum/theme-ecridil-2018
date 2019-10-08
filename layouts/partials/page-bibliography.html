@@ -1,35 +1,72 @@
-{{ if eq .Page.Type "hybritexte" }}
-{{ $bibliographyPath := path.Join .File.Dir "bib.json" }}
-{{ if (fileExists $bibliographyPath) }}
-{{ $bibliography := getJSON "content/" .File.Dir "bib.json" }}
-{{ end }}
-{{ end }}
-{{/* TODO - Use bibliography located in same dir */}}
-{{/* range $bibliography */}}
-{{/*
-<p>ID: {{ .id }}</p>
+{{/* 
+  Page Bibliography
+
+  - You can change the citation style in the site's `config.yml` file.
+  - Citation templates must be put in the `layouts/partials/bibliography` directory 
+    and must have a matching template (`%s-style.html`).
+  - The bibliography may either be set in a `bib.json` file
+    (constructed following CSL-JSON style) located at the same level as the file path 
+    or defined in the front-matter params, as per the CSL-JSON spec.
+
+  CSL-JSON spec :
+  https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html
 */}}
-{{/* end */}}
+
+{{- $errorMissingPartialStyle := dict "Style de citation" "q-cite" "message" "Aucun modèle ne correspond au style de citation entré. Assurez-vous que le style explicité dans `.Site.params` se trouve dans `partials/bibliography`. Par exemple : " "example" "citationStyle: apa" -}}
+
+{{ $bibliographyPath := path.Join .File.Dir "bib.json" }}
+
+{{- if (fileExists $bibliographyPath) -}}
+  {{/* -------------------- BEGIN JSON BIB -------------------- */}}
+  {{ .Scratch.Set "jsonBib" (getJSON "content/" .File.Dir "bib.json") }}
+
+  {{ $.Scratch.Set "bibliography" (.Scratch.Get "jsonBib") }}
+  {{/* -------------------- END JSON BIB -------------------- */}}
+{{- else if ($.Param "bibliography") -}}
+  {{/* -------------------- BEGIN FRONT-MATTER BIB -------------------- */}}
+  {{ .Scratch.Get "frontBib" ($.Param "bibliography") }}
+  
+  {{ $.Scratch.Set "bibliography" (.Scratch.Get "frontBib") }}
+  {{/* -------------------- END FRONT-MATTER BIB -------------------- */}}
+{{- else -}}
+  {{/* -------------------- NO BIB SET -------------------- */}}
+{{- end -}}
 
 {{ if ($.Scratch.GetSortedMapValues "cited") }}
 <section class="quire-page__content__references backmatter">
-    <h2 id="bibliography">Bibliographie</h2>
-    {{ if eq .Site.Params.displayBiblioShort true }}
-    <dl>
-        {{ range ($.Scratch.GetSortedMapValues "cited") }}
-        {{/* the id is in a span because Pandoc otherwise strips them out from dt and dd for EPUBs for some reason */}}
-      <div id="{{ urlize (index . 0) }}">
-        <dt><span>{{ markdownify (index . 0) }}</span></dt>
-        <dd>{{ markdownify (index . 1)}}</dd>
-      </div>
-        {{ end }}
-    </dl>
-    {{ else }}
-    <ul>
-        {{ range ($.Scratch.GetSortedMapValues "cited") }}
-        <li id="{{ urlize (index . 0) }}">{{ markdownify (index . 1)}}</li>
-        {{ end }}
-    </ul>
-    {{ end }}
-{{ end }}
+  <h2 id="bibliography">Bibliographie</h2>
+  <dl>
+    {{/* -------------------- BEGIN RANGE BIBLIOGRAPHY -------------------- */}}
+    {{- range $.Scratch.Get "bibliography" -}}
+    {{/* range ($.Scratch.GetSortedMapValues "cited") */}}
+
+      {{ $citationStyle := ($.Param "citationStyle") | default "apa" }}
+
+      {{ $partialPath := string (printf "bibliography/%s-style.html" $citationStyle) }}
+
+      {{/* -------------------- BEGIN PARTIAL FILE CHECK -------------------- */}}
+      {{/* if templates.Exists (printf "partials/%s" $partialPath) */}} {{/* COMMENTED OUT */}}
+      {{ if eq $citationStyle "apa" }}
+        {{/* 
+          Success, we have a matching template for our citation style. 
+        */}}
+        {{- partial $partialPath . -}}
+      {{- else -}}
+
+        {{/* 
+          Citation style does not match any template, show an error.
+        */}}
+
+        {{- partial "error-message.html" $errorMissingPartialStyle -}}
+
+        {{/* 
+          Default to APA-Style
+        */}}
+        {{- partial (printf "bibliography/%s-style.html" "apa") . -}}
+      {{/* -------------------- END PARTIAL FILE CHECK -------------------- */}}
+      {{- end -}}
+    {{/* -------------------- END RANGE BIBLIOGRAPHY -------------------- */}}
+    {{- end -}}
+  </dl>
 </section>
+{{ end }}
