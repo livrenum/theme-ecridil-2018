@@ -261,6 +261,7 @@ body {
           font-size: $counter-font-size;
           color: rgba($page-text-color, 0.4);
           line-height: $quire-page-line-height * 1em / $counter-font-size;
+          margin-top: .15em; // micro-adjustment
           
           @media (min-width: $hybrilivre-col-breakpoint) {
           }

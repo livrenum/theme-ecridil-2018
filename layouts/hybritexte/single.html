@@ -7,11 +7,32 @@
 */}}
 
 {{ define "main" }}
+
+{{/* 
+  Set references
+*/}}
+{{ $bibliographyPath := path.Join .File.Dir "bib.json" }}
+
+{{- if (fileExists $bibliographyPath) -}}
+  {{/* -------------------- BEGIN JSON BIB -------------------- */}}
+  {{ .Scratch.Set "jsonBib" (getJSON "content/" .File.Dir "bib.json") }}
+
+  {{ $.Page.Scratch.Set "bibliography" (.Scratch.Get "jsonBib") }}
+  {{/* -------------------- END JSON BIB -------------------- */}}
+{{- else if ($.Param "bibliography") -}}
+  {{/* -------------------- BEGIN FRONT-MATTER BIB -------------------- */}}
+  {{ .Scratch.Get "frontBib" ($.Param "bibliography") }}
+  
+  {{ $.Page.Scratch.Set "bibliography" (.Scratch.Get "frontBib") }}
+  {{/* -------------------- END FRONT-MATTER BIB -------------------- */}}
+{{- else -}}
+  {{/* -------------------- NO BIB SET -------------------- */}}
+{{- end -}}
+
 <article class="{{ partial "page-class.html" . }} quire-page hybritexte-page" id="main" role="main">
   {{/* partial "page-header.html" . */}}
   <header class="hybritexte-page__header">
     <div class="container is-fluid has-2-columns">
-<!--      <div class="hybritexte-page__separator"></div>-->
 
       {{/* Page Title */}}
       <h1 class="hybritexte-page__header__title" id="{{ .Title | urlize }}">

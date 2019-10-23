@@ -14,43 +14,34 @@
 
 {{- $errorMissingPartialStyle := dict "Style de citation" "q-cite" "message" "Aucun modèle ne correspond au style de citation entré. Assurez-vous que le style explicité dans `.Site.params` se trouve dans `partials/bibliography`. Par exemple : " "example" "citationStyle: apa" -}}
 
-{{ $bibliographyPath := path.Join .File.Dir "bib.json" }}
+{{ $cited := $.Page.Scratch.Get "bibliography" }}
 
-{{- if (fileExists $bibliographyPath) -}}
-  {{/* -------------------- BEGIN JSON BIB -------------------- */}}
-  {{ .Scratch.Set "jsonBib" (getJSON "content/" .File.Dir "bib.json") }}
-
-  {{ $.Scratch.Set "bibliography" (.Scratch.Get "jsonBib") }}
-  {{/* -------------------- END JSON BIB -------------------- */}}
-{{- else if ($.Param "bibliography") -}}
-  {{/* -------------------- BEGIN FRONT-MATTER BIB -------------------- */}}
-  {{ .Scratch.Get "frontBib" ($.Param "bibliography") }}
-  
-  {{ $.Scratch.Set "bibliography" (.Scratch.Get "frontBib") }}
-  {{/* -------------------- END FRONT-MATTER BIB -------------------- */}}
-{{- else -}}
-  {{/* -------------------- NO BIB SET -------------------- */}}
-{{- end -}}
-
-{{ if ($.Scratch.GetSortedMapValues "cited") }}
+{{ if $cited }}
 <section class="quire-page__content__references backmatter">
   <h2 id="bibliography">Bibliographie</h2>
   <dl>
     {{/* -------------------- BEGIN RANGE BIBLIOGRAPHY -------------------- */}}
-    {{- range $.Scratch.Get "bibliography" -}}
-    {{/* range ($.Scratch.GetSortedMapValues "cited") */}}
+    {{- range $citedIndex, $citedId := $cited -}}
+      {{ $currentRef := index $cited $citedIndex }}
+    
 
       {{ $citationStyle := ($.Param "citationStyle") | default "apa" }}
 
       {{ $partialPath := string (printf "bibliography/%s-style.html" $citationStyle) }}
 
+      <div id="{{ $citedId | urlize }}">
       {{/* -------------------- BEGIN PARTIAL FILE CHECK -------------------- */}}
       {{/* if templates.Exists (printf "partials/%s" $partialPath) */}} {{/* COMMENTED OUT */}}
       {{ if eq $citationStyle "apa" }}
         {{/* 
           Success, we have a matching template for our citation style. 
         */}}
-        {{- partial $partialPath . -}}
+
+        <dt>
+          {{- range $authorIndex, $author := $currentRef.author }}{{- if gt $authorIndex 0 }}, {{ if eq (len $currentRef.author) (add $authorIndex 1) -}}&amp; {{ end -}}{{ end -}}{{ $author.family }}{{- end }} ({{- if and (isset $currentRef "issued") (isset .issued "date-parts") -}}{{- range $index, $dateParts := (index $currentRef.issued "date-parts") -}}{{- if gt $index 0 -}}, {{ end -}}{{- range first 1 $dateParts -}}{{- . -}}{{- end -}}{{- end -}}{{ else }}<i>S.D.</i>{{- end -}})</dt>
+        <dd>
+          {{- partial $partialPath $currentRef -}}
+        </dd>
       {{- else -}}
 
         {{/* 
@@ -62,9 +53,13 @@
         {{/* 
           Default to APA-Style
         */}}
-        {{- partial (printf "bibliography/%s-style.html" "apa") . -}}
+        <dt>{{ range $currentRef.author }}{{ $currentRef.Family }}{{ end }}</dt>
+        <dd>
+          {{- partial (printf "bibliography/%s-style.html" "apa") $currentRef -}}
+        </dd>
       {{/* -------------------- END PARTIAL FILE CHECK -------------------- */}}
       {{- end -}}
+      </div>
     {{/* -------------------- END RANGE BIBLIOGRAPHY -------------------- */}}
     {{- end -}}
   </dl>
