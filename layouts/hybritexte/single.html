@@ -27,6 +27,7 @@
   {{/* -------------------- END FRONT-MATTER BIB -------------------- */}}
 {{- else -}}
   {{/* -------------------- NO BIB SET -------------------- */}}
+{{ errorf "No bib set!" }}
 {{- end -}}
 
 <article class="{{ partial "page-class.html" . }} quire-page hybritexte-page" id="main" role="main">

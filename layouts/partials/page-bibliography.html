@@ -21,15 +21,14 @@
   <h2 id="bibliography">Bibliographie</h2>
   <dl>
     {{/* -------------------- BEGIN RANGE BIBLIOGRAPHY -------------------- */}}
-    {{- range $citedIndex, $citedId := $cited -}}
+    {{- range $citedIndex, $citedRef := $cited -}}
       {{ $currentRef := index $cited $citedIndex }}
-    
 
       {{ $citationStyle := ($.Param "citationStyle") | default "apa" }}
 
       {{ $partialPath := string (printf "bibliography/%s-style.html" $citationStyle) }}
 
-      <div id="{{ $citedId | urlize }}">
+      <div id="{{ $currentRef.id | urlize }}">
       {{/* -------------------- BEGIN PARTIAL FILE CHECK -------------------- */}}
       {{/* if templates.Exists (printf "partials/%s" $partialPath) */}} {{/* COMMENTED OUT */}}
       {{ if eq $citationStyle "apa" }}
