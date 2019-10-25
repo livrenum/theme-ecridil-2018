@@ -94,6 +94,7 @@ $column-gap: 2rem;
     max-width: calc(50% - #{$column-gap});
     width: 50%;
     float: right;
+    clear: both; // addresses the bug when 2 floating elements could be side-to-side
     position: absolute;
     right: 0;
   }
