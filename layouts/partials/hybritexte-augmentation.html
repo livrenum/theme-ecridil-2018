@@ -61,31 +61,66 @@
     {{/* -------------------- BEGIN VALID TYPES -------------------- */}}
     {{ if and (isset . "type") (in $validTypes .type) }}
     <div class="hybritexte-augmentation--{{ .type }}">
-  
-    {{/* -------------------- BEGIN TEXT TYPE -------------------- */}}
-    {{ if eq .type "text" }}
-      {{ if .content }}
-      <div class="hybritexte-augmentation--text__text-wrap">
-        <blockquote class="hybritexte-augmentation--text__blockquote">
 
-          {{ .content | markdownify }}
+      {{/* -------------------- BEGIN TEXT TYPE -------------------- */}}
+      {{ if eq .type "text" }}
+        {{ if .content }}
+        <div class="hybritexte-augmentation--text__text-wrap">
           
-          {{ with .author }}
-          <cite>{{ . }}</cite>
-          {{ end }}
-        </blockquote>
-      </div>
-      {{ end }}
-    {{ end }}
-    {{/* -------------------- END TEXT TYPE -------------------- */}}
+          <em>Commentaire</em>
 
-    {{/* -------------------- BEGIN IMAGE TYPE -------------------- */}}
-    {{ if eq .type "image" }}
-    <figure class="hybritexte-augmentation--figure">
-      <img class="hybritexte-augmentation--figure__image"
-           {{ with .id }}id="{{ . }}-image"{{ end }}
-           src="{{ .src }}"
-           alt="{{ with .title }}{{ . }}{{ end }}">
+          <blockquote class="hybritexte-augmentation--text__blockquote">
+
+            {{ .content | markdownify }}
+
+            {{ with .author }}
+            <cite>{{ . }}</cite>
+            {{ end }}
+          </blockquote>
+        </div>
+        {{ end }}
+      {{ end }}
+      {{/* -------------------- END TEXT TYPE -------------------- */}}
+
+      {{/* -------------------- BEGIN IMAGE TYPE -------------------- */}}
+      {{ if eq .type "image" }}
+      <figure class="hybritexte-augmentation--figure">
+        <img class="hybritexte-augmentation--figure__image"
+             {{ with .id }}id="{{ . }}-image"{{ end }}
+             src="{{ .src }}"
+             alt="{{ with .title }}{{ . }}{{ end }}">
+
+        <figcaption class="hybritexte-augmentation--figure__caption">
+          {{ if .title }}
+          <span class="hybritexte-augmentation--figure__title">
+            {{ .title | markdownify }}
+          </span>
+          {{ end }}
+
+          {{ if .caption}}
+          <span class="hybritexte-augmentation--figure__caption__text">
+            {{ .caption | markdownify }}
+          </span>
+          {{ end }}
+        </figcaption>
+      </figure>    
+      {{ end }}
+      {{/* -------------------- END IMAGE TYPE -------------------- */}}
+
+      {{/* -------------------- BEGIN FIGURE-GROUP TYPE -------------------- */}}
+      {{ if eq .type "figure-group" }}
+      {{ partial "hybritexte-figure-group.html" . }}
+      {{ end }}
+      {{/* -------------------- END FIGURE-GROUP TYPE -------------------- */}}
+
+      {{/* -------------------- BEGIN YOUTUBE TYPE -------------------- */}}
+      {{ if eq .type "youtube" }}
+      {{ $youtubeId := .youtubeId | string }}
+      {{ $title := .title | markdownify | htmlEscape }}
+      <figure class="hybritexte-augmentation--figure">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+          <iframe src="https://www.youtube.com/embed/{{ $youtubeId }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="{{ $title }}"></iframe>
+        </div>
 
       <figcaption class="hybritexte-augmentation--figure__caption">
         {{ if .title }}
@@ -100,41 +135,63 @@
         </span>
         {{ end }}
       </figcaption>
-    </figure>    
-    {{ end }}
-    {{/* -------------------- END IMAGE TYPE -------------------- */}}
+      {{ end }}
+      {{/* -------------------- END YOUTUBE TYPE -------------------- */}}
 
-    {{/* -------------------- BEGIN FIGURE-GROUP TYPE -------------------- */}}
-    {{ if eq .type "figure-group" }}
-    {{ partial "hybritexte-figure-group.html" . }}
-    {{ end }}
-    {{/* -------------------- END FIGURE-GROUP TYPE -------------------- */}}
+      {{/* -------------------- BEGIN IFRAME TYPE -------------------- */}}
+      {{ if eq .type "iframe" }}
+      <figure class="hybritexte-augmentation--figure">
+        <div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden; max-width: 100%;">
+          <iframe src="{{ .src }}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; min-height: 100%; margin: 0 auto;">
+          </iframe>
+        </div>
 
-    {{/* -------------------- BEGIN YOUTUBE TYPE -------------------- */}}
-    {{ if eq .type "youtube" }}
-    {{ $youtubeId := .youtubeId | string }}
-    {{ $title := .title | markdownify | htmlEscape }}
-    <figure class="hybritexte-augmentation--figure">
-      <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-        <iframe src="https://www.youtube.com/embed/{{ $youtubeId }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="{{ $title }}"></iframe>
+        <figcaption class="hybritexte-augmentation--figure__caption">
+          {{ if .title }}
+          <span class="hybritexte-augmentation--figure__title">
+            {{ .title | markdownify }}
+          </span>
+          {{ end }}
+
+          {{ if .caption}}
+          <span class="hybritexte-augmentation--figure__caption__text">
+            {{ .caption | markdownify }}
+          </span>
+          {{ end }}
+        </figcaption>
+      </figure>
+      {{ end }}
+      {{/* -------------------- END IFRAME TYPE -------------------- */}}
+        
+      {{/* -------------------- BEGIN AUDIO TYPE -------------------- */}}
+      {{ if eq .type "audio" }}
+      <div class="hybritexte-augmentation--audioplayer">
+        <em>Extrait audio</em>
+
+        <audio class="hybritexte-augmentation--audioplayer__media-player" preload="none" controls>
+          {{ range .src }}
+          <source src="{{ $.Site.BaseURL }}/audio/{{ .src }}" type="audio/{{ .type }}">
+          {{ end }}
+          Votre navigateur ne supporte pas la lecture audio. Veuillez <a href="{{ $.Site.BaseURL }}/audio/{{ range first 1 .src }}{{ .src }}{{ end }}">télécharger le morceau</a>.
+        </audio>
+        <details>
+          {{- if .title }}
+          <div>
+            <strong>Titre</strong> :
+            <span class="em">{{ .title }}</span>
+          </div>
+          {{- end }}
+          
+          {{ if .author }}
+          <div>
+            <strong>Auteur</strong> :
+            <span>{{ .author }}</span>
+          </div>
+          {{ end }}
+        </details>
       </div>
-
-    <figcaption class="hybritexte-augmentation--figure__caption">
-      {{ if .title }}
-      <span class="hybritexte-augmentation--figure__title">
-        {{ .title | markdownify }}
-      </span>
       {{ end }}
-
-      {{ if .caption}}
-      <span class="hybritexte-augmentation--figure__caption__text">
-        {{ .caption | markdownify }}
-      </span>
-      {{ end }}
-    </figcaption>
-    {{ end }}
-    {{/* -------------------- END YOUTUBE TYPE -------------------- */}}
-
+      {{/* -------------------- END AUDIO TYPE -------------------- */}}
     </div>
     {{ else }}
 

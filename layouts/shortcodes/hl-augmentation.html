@@ -1,4 +1,4 @@
-{{ $bibliography := getJSON "content/" .Page.File.Dir "augmentations.json" }}
+{{ $bibliography := getJSON "contenus/" .Page.File.Dir "augmentations.json" }}
 
 {{- $after := default "none" (.Get 0 | string) -}}
 {{- $before := default "none" (.Get 1 | string) -}}

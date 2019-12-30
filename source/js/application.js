@@ -22,7 +22,7 @@ import 'velocity-animate'
 import Search from './search.js'
 import Map from './map.js'
 import DeepZoom from './deepzoom.js'
-import Navigation from './navigation.js'
+//import Navigation from './navigation.js'
 import Augmentations from './augmentations.js'
 import espaceFine from './espacefine.js'
 
@@ -160,7 +160,7 @@ window.search = () => {
 function globalSetup() {
   let container = document.getElementById('container')
   container.classList.remove('no-js')
-  loadSearchData()
+//  loadSearchData()
   scrollToHash()
 }
 
@@ -335,7 +335,7 @@ function pageSetup() {
   mapSetup()
   deepZoomSetup()
   sliderSetup()
-  navigationSetup()
+//  navigationSetup()
   espacesInsecablesSetup()
 }
 
@@ -362,36 +362,36 @@ $(document).ready(() => {
   augmentationsSetup()
   smoothScrollAnchors()
 
-  $('#container').smoothState({
-    scroll: false,
-    onStart: {
-      duration: 200,
-      render($container) {
-        $container.velocity('fadeOut', { duration: 200 })
-      }
-    },
-    onReady: {
-      duration: 200,
-      render($container, $newContent) {
-        $container.html($newContent)
-        $container.velocity('fadeIn', { duration: 250 })
-        pageSetup()
-      }
-    },
-    onAfter: function($container, $newContent) {
-      scrollToHash();
-      smoothScrollAnchors()
-      espacesInsecablesSetup()
-
-      if (window.ga) {
-        window.ga('send', 'pageview', window.location.pathname);
-      }
-
-      // Content must be loaded to setup augmentations
-      augmentationsSetup()
-    },
-    onBefore($container, $newContent) {
-      pageTeardown();
-    }
-  })
+//  $('#container').smoothState({
+//    scroll: false,
+//    onStart: {
+//      duration: 200,
+//      render($container) {
+//        $container.velocity('fadeOut', { duration: 200 })
+//      }
+//    },
+//    onReady: {
+//      duration: 200,
+//      render($container, $newContent) {
+//        $container.html($newContent)
+//        $container.velocity('fadeIn', { duration: 250 })
+//        pageSetup()
+//      }
+//    },
+//    onAfter: function($container, $newContent) {
+//      scrollToHash();
+//      smoothScrollAnchors()
+//      espacesInsecablesSetup()
+//
+//      if (window.ga) {
+//        window.ga('send', 'pageview', window.location.pathname);
+//      }
+//
+//      // Content must be loaded to setup augmentations
+//      augmentationsSetup()
+//    },
+//    onBefore($container, $newContent) {
+//      pageTeardown();
+//    }
+//  })
 })

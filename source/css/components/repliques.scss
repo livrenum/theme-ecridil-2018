@@ -1,0 +1,24 @@
+// Répliques
+
+.replique {
+  
+  &__note {
+    font-style: italic;
+    margin-left: 3rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+  
+  margin: 4rem 0;
+
+}
+a.link-error {
+  color: $color-danger !important;
+  border-color: $color-danger !important;
+  
+  .quire-citation__content {
+    color: $color-danger;
+    border-color: $color-danger;
+    background-color: lighten($color-danger, 30%);
+  }
+}

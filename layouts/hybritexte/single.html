@@ -8,28 +8,6 @@
 
 {{ define "main" }}
 
-{{/* 
-  Set references
-*/}}
-{{ $bibliographyPath := path.Join .File.Dir "bib.json" }}
-
-{{- if (fileExists $bibliographyPath) -}}
-  {{/* -------------------- BEGIN JSON BIB -------------------- */}}
-  {{ .Scratch.Set "jsonBib" (getJSON "content/" .File.Dir "bib.json") }}
-
-  {{ $.Page.Scratch.Set "bibliography" (.Scratch.Get "jsonBib") }}
-  {{/* -------------------- END JSON BIB -------------------- */}}
-{{- else if ($.Param "bibliography") -}}
-  {{/* -------------------- BEGIN FRONT-MATTER BIB -------------------- */}}
-  {{ .Scratch.Get "frontBib" ($.Param "bibliography") }}
-  
-  {{ $.Page.Scratch.Set "bibliography" (.Scratch.Get "frontBib") }}
-  {{/* -------------------- END FRONT-MATTER BIB -------------------- */}}
-{{- else -}}
-  {{/* -------------------- NO BIB SET -------------------- */}}
-{{ errorf "No bib set!" }}
-{{- end -}}
-
 <article class="{{ partial "page-class.html" . }} quire-page hybritexte-page" id="main" role="main">
   {{/* partial "page-header.html" . */}}
   <header class="hybritexte-page__header">
@@ -69,8 +47,24 @@
       {{ if .Content }}
       {{ .Content }}
       
-      {{ partial "page-bibliography.html" . }}
+      {{/* partial "page-bibliography.html" . */}}
       {{ end }}
+      
+      {{- if isset $.Site.Params "imagedir" }}
+      {{ $.Scratch.Set "imageDir" $.Site.Params.imageDir }}
+      {{ else }}
+      {{ $.Scratch.Set "imageDir" "" }}
+      {{ end -}}
+      {{- $imgDir := $.Scratch.Get "imageDir" -}}
+      {{- if .Prev -}}
+      {{- if and (ne .Prev.Params.online false) (ne .Prev.Type "data") -}}
+      <footer class="hybritexte-page__footer">
+        <a href="{{ .Prev.Permalink }}" rel="next" class="button is-primary is-large">
+          {{ if isset .Prev.Params "number" }}{{ .Prev.Params.number }}. {{ end }}{{ .Prev.Title }} &rarr;
+        </a>
+      </footer>
+      {{- end -}}
+      {{- end -}}
     </div>
   </section>
 </article>

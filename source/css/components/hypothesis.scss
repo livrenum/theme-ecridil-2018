@@ -1,0 +1,16 @@
+// Hypothesis Stuff
+
+// extra selectors to override
+body {
+.annotator-frame {
+  .annotator-toolbar {
+    top: 50px;
+  }
+
+  .annotator-frame-button {
+    border: 1px solid $white;
+    background: lighten($page-color, 10%);
+    color: $color-primary;
+  }
+  }
+}

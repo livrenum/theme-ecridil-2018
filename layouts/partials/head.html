@@ -6,8 +6,6 @@
   TODO: include a placeholder for custom fonts...
 */}}
 
-
-
 {{- $css := "css/application.css" | relURL -}}
 {{- $customCSS := "css/custom.css" | relURL -}}
 
@@ -22,6 +20,9 @@
   {{ partial "metadata.html" . }}
   <link rel="stylesheet" href="{{ $css }}">
   <link rel="stylesheet" href="{{ $customCSS }}">
+  
+  <link rel="icon" href="{{ .Site.BaseURL }}img/favicon.png" />
+  <link rel="apple-touch-icon" href="{{ .Site.BaseURL }}img/apple-touch-icon.png" />
 
   <script>
    // Part of the HTML5 Template Polyfill for IE/Edge; required for client-side
@@ -32,6 +33,21 @@
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-  {{ partial "analytics.html" . }}
+  
+  <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}fonts/octicons/octicons.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://assets.loupbrun.ca/fonts/harris/stylesheet.css" />
 
+  <script>
+    window.hypothesisConfig = function () {
+      return {
+        branding: {
+          appBackgroundColor: '#111',
+          ctaBackgroundColor: '#40c613',
+          ctaTextColor: 'white',
+          selectionFontFamily: 'Harris, monospace'
+        }
+      };
+    };
+  </script>
+  <script src="https://hypothes.is/embed.js" async></script>
 </head>

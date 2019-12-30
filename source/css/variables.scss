@@ -16,11 +16,12 @@
 $serif: Merriweather, Georgia, serif;
 $sans-serif: Titillium, Helvetica, sans-serif;
 $slab-serif: Aleo, Rockwell, "Trebuchet MS", sans-serif;
+$monospace: 'Harris', Menlo, monospace;
 
-$family-primary: $sans-serif;
+$family-primary: $monospace;
 // body text: $serif, $sans-serif, $slab-serif
 
-$family-secondary: $sans-serif;
+$family-secondary: $monospace;
 // headings and navigation items: $serif, $sans-serif, $slab-serif
 
 $quire-base-font-size: 14px;
@@ -38,32 +39,35 @@ $blockquote-font-size: 1rem;
 // Change the color variables once at the top, or change elements individually
 // below. Colors are typically Hex values, or one of 140 standard color names/
 
-$color-primary: #7d9792;
-$dark: #221411;
-$paper-tint: #f9f8ec;
-$paper-accent: #ae7d65;
+$color-primary: #40c613;
+$primary: $color-primary; // for bulma
+$success: $color-primary; // for bulma
+$color-danger: #ff3344;
+$dark: #0a0c09;
+$paper-tint: #bac4c6;
+$paper-accent: #40c613;
 $light: $paper-tint;
 $white: #ffffff;
 
-$page-color: $paper-tint;
-$page-text-color: $dark;
+$page-color: $dark;
+$page-text-color: $white;
 
 $quire-page-link-color: $color-primary;
 $quire-page-link-highlight: darken($page-color, 15%);
 
-$quire-page-header-color: $paper-tint;
-$quire-page-header-text-color: $dark;
+$quire-page-header-color: $dark;
+$quire-page-header-text-color: $white;
 
-$quire-navbar-color: $paper-tint;
-$quire-navbar-border-color: $dark;
-$quire-navbar-text-color: $dark;
+$quire-navbar-color: $dark;
+$quire-navbar-border-color: $white;
+$quire-navbar-text-color: $white;
 
 $quire-menu-color: $dark;
-$quire-menu-border-color: $dark;
-$quire-menu-text-color: $paper-tint;
+$quire-menu-border-color: $white;
+$quire-menu-text-color: $dark;
 
-$quire-entry-image-color: $dark;
-$quire-entry-image-icons-color: $paper-tint;
+$quire-entry-image-color: $white;
+$quire-entry-image-icons-color: $white;
 
 $quire-splash-page-color: $color-primary;
 
@@ -71,7 +75,7 @@ $quire-splash-page-color: $color-primary;
 // -----------------------------------------------------------------------------
 
 $quire-cover-color-1: $color-primary;
-$quire-cover-color-2: #dc52f5;
+$quire-cover-color-2: $dark;
 // make the colors the same to have a solid background
 
 $cover-overlay-image-opacity: .5;
@@ -82,7 +86,7 @@ $cover-overlay-image: 'pattern-1.png';
 // or pattern overlay, add it to the YAML of your cover.md file,
 // --> image: cover-background.jpg
 
-$quire-cover-font-family: $sans-serif;
+$quire-cover-font-family: $monospace;
 $quire-cover-text-color: $dark;
 
 $quire-page-line-height: 1.41;

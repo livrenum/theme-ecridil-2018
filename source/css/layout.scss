@@ -33,6 +33,9 @@ $quire-menu-text-color: $white !default;
 $quire-menu-width: 350px !default;
 $navbar-height: 3rem !default;
 
+::selection {
+  background-color: $color-primary;
+}
 
 // .quire
 // -----------------------------------------------------------------------------

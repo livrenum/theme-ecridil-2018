@@ -14,9 +14,9 @@ Cover page layout. This controls the home page of the publication.
   {{/* Begin full-page cover section */}}
   {{- if .Params.image -}}
   {{- $imgPath := printf "%s/%s" ($.Scratch.Get "imageDir") .Params.image -}}
-    <section class="quire-cover__hero hero is-fullheight" style="background-image: url('{{ $imgPath | absURL }}');">
+    <section class="quire-cover__hero hero is-fullheight is-hidden" style="background-image: url('{{ $imgPath | absURL }}');">
   {{- else -}}
-    <section class="quire-cover__hero is-fullheight">
+    <section class="quire-cover__hero is-fullheight is-hidden">
       <div class="quire-cover__overlay"></div>
   {{- end -}}
     <div class="quire-cover__hero-body hero-body">

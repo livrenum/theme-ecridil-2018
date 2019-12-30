@@ -14,7 +14,22 @@
       {{ if .Content }}
       {{ .Content }}
 
-      {{ partial "page-bibliography.html" . }}
+      
+      {{- if isset $.Site.Params "imagedir" }}
+      {{ $.Scratch.Set "imageDir" $.Site.Params.imageDir }}
+      {{ else }}
+      {{ $.Scratch.Set "imageDir" "" }}
+      {{ end -}}
+      {{- $imgDir := $.Scratch.Get "imageDir" -}}
+      {{- if .Prev -}}
+      {{- if and (ne .Prev.Params.online false) (ne .Prev.Type "data") -}}
+      <footer class="hybritexte-page__footer">
+        <a href="{{ .Prev.Permalink }}" rel="next" class="button is-primary is-large">
+          {{ if isset .Prev.Params "number" }}{{ .Prev.Params.number }}. {{ end }}{{ .Prev.Title }} &rarr;
+        </a>
+      </footer>
+      {{- end -}}
+      {{- end -}}
       {{ end }}
     </div>
   </section>
